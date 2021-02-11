@@ -5,7 +5,8 @@ const config = {
     projectId: '',
     storageBucket: '',
     messagingSenderId: '',
-    appId: ''
+    appId: '',
+    measurementId: ''
 }
 
 export default config;
