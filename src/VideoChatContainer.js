@@ -18,10 +18,10 @@ class VideoChatContainer extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            database: null,
-            connectedUser: null,
-            localStream: null,
-            localConnection: null
+            database: '',
+            connectedUser: '',
+            localStream: '',
+            localConnection: ''
         }
         this.localVideoRef = React.createRef()
         this.remoteVideoRef = React.createRef()

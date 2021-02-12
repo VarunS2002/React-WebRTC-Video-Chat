@@ -8,8 +8,8 @@ export default class VideoChat extends React.Component {
         super(props)
         this.state = {
             isLoggedIn: false,
-            userToCall: null,
-            username: null
+            userToCall: '',
+            username: ''
         }
     }
 
