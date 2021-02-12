@@ -40,7 +40,11 @@ export default class VideoChat extends React.Component {
         if (event.key === "Enter" && document.activeElement.id === "login-input") {
             document.getElementById("login-btn").click()
         } else if (event.key === "Enter" && document.activeElement.id === "contact-input") {
-            document.getElementById("call-btn").click()
+            try {
+                document.getElementById("call-btn").click()
+            } catch (exception) {
+                console.log(exception)
+            }
         }
     }
 
