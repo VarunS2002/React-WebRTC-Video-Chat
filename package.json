@@ -10,7 +10,6 @@
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.2",
     "web-vitals": "^1.1.0",
-    "classnames": "^2.2.6",
     "firebase": "^8.2.6",
     "webrtc-adapter": "^7.7.0"
   },

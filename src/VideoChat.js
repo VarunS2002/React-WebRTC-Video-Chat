@@ -1,7 +1,6 @@
 import React from 'react'
 import './App.css'
 import 'firebase/database'
-import classnames from 'classnames'
 
 export default class VideoChat extends React.Component {
     constructor(props) {
@@ -25,7 +24,7 @@ export default class VideoChat extends React.Component {
     }
 
     renderVideos = () => {
-        return <div className={classnames('videos', {active: this.state.isLoggedIn})}>
+        return <div className={this.state.isLoggedIn ? 'videos active' : 'videos'}>
             <div>
                 <label>{this.state.username}</label>
 
@@ -40,11 +39,10 @@ export default class VideoChat extends React.Component {
     }
 
     renderForms = () => {
-        window.addEventListener('keypress', function(event) {
+        window.addEventListener('keypress', function (event) {
             if (event.code === "Enter" && document.activeElement.id === "login-input") {
                 document.getElementById("login-btn").click();
-            }
-            else if (event.code === "Enter" && document.activeElement.id === "contact-input") {
+            } else if (event.code === "Enter" && document.activeElement.id === "contact-input") {
                 document.getElementById("call-btn").click();
             }
         });
