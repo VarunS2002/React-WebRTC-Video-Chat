@@ -54,9 +54,8 @@ class VideoChatContainer extends React.Component {
             return false
         } else if (this.state.localConnection !== nextState.localConnection) {
             return false
-        } else {
-            return true
         }
+        return true;
     }
 
     startCall = async (username, userToCall) => {
@@ -64,7 +63,7 @@ class VideoChatContainer extends React.Component {
         const {database, localStream, localConnection} = this.state
         listenToConnectionEvents(localConnection, username, userToCall, database, this.remoteVideoRef, doCandidate)
         // create an offer
-        createOffer(localConnection, localStream, userToCall, doOffer, database, username)
+        await createOffer(localConnection, localStream, userToCall, doOffer, database, username)
 
     }
 
@@ -94,6 +93,7 @@ class VideoChatContainer extends React.Component {
                     // listen to the connection events
                     listenToConnectionEvents(localConnection, username, notif.from, database, this.remoteVideoRef, doCandidate)
                     // send an answer
+                    // noinspection JSIgnoredPromiseFromCall
                     sendAnswer(localConnection, localStream, notif, doAnswer, database, username)
                     break;
                 case 'answer':

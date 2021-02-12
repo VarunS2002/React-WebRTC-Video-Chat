@@ -1,5 +1,6 @@
 export const createOffer = async (connection, localStream, userToCall, doOffer, database, username) => {
     try {
+        // noinspection JSUnresolvedFunction
         connection.addStream(localStream)
 
         const offer = await connection.createOffer()
@@ -51,12 +52,13 @@ export const listenToConnectionEvents = (conn, username, remoteUsername, databas
 export const sendAnswer = async (conn, localStream, notif, doAnswer, database, username) => {
     try {
         // add the local stream to the connection
+        // noinspection JSUnresolvedFunction
         conn.addStream(localStream)
         // set the remote and local descriptions and create an answer
-        conn.setRemoteDescription(JSON.parse(notif.offer))
+        await conn.setRemoteDescription(JSON.parse(notif.offer))
         // create an answer to an offer
         const answer = await conn.createAnswer()
-        conn.setLocalDescription(answer)
+        await conn.setLocalDescription(answer)
         // send answer to the other peer
         doAnswer(notif.from, answer, database, username)
     } catch (exception) {
@@ -68,10 +70,12 @@ export const startCall = (yourConn, notif) => {
     // it should be called when we
     // received an answer from other peer to start the call
     // and set remote the description
+    // noinspection JSIgnoredPromiseFromCall
     yourConn.setRemoteDescription(JSON.parse(notif.answer))
 }
 
 export const addCandidate = (yourConn, notif) => {
     // apply the new received candidate to the connection
+    // noinspection JSIgnoredPromiseFromCall
     yourConn.addIceCandidate(new RTCIceCandidate(JSON.parse(notif.candidate)))
 }
