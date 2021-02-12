@@ -30,15 +30,12 @@ class VideoChatContainer extends React.Component {
     componentDidMount = async () => {
         // initialize firebase
         firebase.initializeApp(config)
-
         // getting local video stream
         const localStream = await initiateLocalStream()
         this.localVideoRef.srcObject = localStream
-
         // create the local connection
         const localConnection = await initiateConnection()
-
-
+        // set values in state
         this.setState({
             database: firebase.database(),
             localStream: localStream,
@@ -55,7 +52,7 @@ class VideoChatContainer extends React.Component {
         } else if (this.state.localConnection !== nextState.localConnection) {
             return false
         }
-        return true;
+        return true
     }
 
     startCall = async (username, userToCall) => {
@@ -70,7 +67,6 @@ class VideoChatContainer extends React.Component {
     onLogin = async (username) => {
         // do the login phase
         await doLogin(username, this.state.database, this.handleUpdate)
-
     }
 
     setLocalVideoRef = ref => {
@@ -111,7 +107,6 @@ class VideoChatContainer extends React.Component {
                     break;
             }
         }
-
     }
 
     render() {
