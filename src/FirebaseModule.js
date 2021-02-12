@@ -1,11 +1,11 @@
-export const doLogin = async (username, database, handleUpdate) => {
+const doLogin = async (username, database, handleUpdate) => {
     await database.ref('/users/' + username).remove()
     database.ref('/users/' + username).on('value', snapshot => {
         snapshot.exists() && handleUpdate(snapshot.val(), username)
     })
 }
 
-export const doOffer = async (to, offer, database, username) => {
+const doOffer = async (to, offer, database, username) => {
     await database.ref('/users/' + to).set({
         type: 'offer',
         from: username,
@@ -13,7 +13,7 @@ export const doOffer = async (to, offer, database, username) => {
     })
 }
 
-export const doAnswer = async (to, answer, database, username) => {
+const doAnswer = async (to, answer, database, username) => {
     await database.ref('/users/' + to).update({
         type: 'answer',
         from: username,
@@ -21,11 +21,18 @@ export const doAnswer = async (to, answer, database, username) => {
     })
 }
 
-export const doCandidate = async (to, candidate, database, username) => {
+const doCandidate = async (to, candidate, database, username) => {
     // send the new candidate to the peer
     await database.ref('/users/' + to).update({
         type: 'candidate',
         from: username,
         candidate: JSON.stringify(candidate)
     })
+}
+
+export {
+    doLogin,
+    doOffer,
+    doAnswer,
+    doCandidate
 }

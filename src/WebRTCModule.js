@@ -1,18 +1,16 @@
-export const createOffer = async (connection, localStream, userToCall, doOffer, database, username) => {
+const createOffer = async (connection, localStream, userToCall, doOffer, database, username) => {
     try {
         // noinspection JSUnresolvedFunction
         connection.addStream(localStream)
-
         const offer = await connection.createOffer()
         await connection.setLocalDescription(offer)
-
         doOffer(userToCall, offer, database, username)
     } catch (exception) {
         console.error(exception)
     }
 }
 
-export const initiateLocalStream = async () => {
+const initiateLocalStream = async () => {
     try {
         return await navigator.mediaDevices.getUserMedia({
             video: true,
@@ -22,7 +20,8 @@ export const initiateLocalStream = async () => {
         console.error(exception)
     }
 }
-export const initiateConnection = async () => {
+
+const initiateConnection = async () => {
     try {
         // create a connection
         // using Google public stun server
@@ -33,14 +32,13 @@ export const initiateConnection = async () => {
     }
 }
 
-export const listenToConnectionEvents = (connection, username, remoteUsername, database, remoteVideoRef, doCandidate) => {
+const listenToConnectionEvents = (connection, username, remoteUsername, database, remoteVideoRef, doCandidate) => {
     // listen for ice candidates
     connection.onicecandidate = function (event) {
         if (event.candidate) {
             doCandidate(remoteUsername, event.candidate, database, username)
         }
     }
-
     // when a remote user adds stream to the peer connection, we display it
     connection.ontrack = function (e) {
         if (remoteVideoRef.srcObject !== e.streams[0]) {
@@ -49,7 +47,7 @@ export const listenToConnectionEvents = (connection, username, remoteUsername, d
     }
 }
 
-export const sendAnswer = async (connection, localStream, remoteUserDetails, doAnswer, database, username) => {
+const sendAnswer = async (connection, localStream, remoteUserDetails, doAnswer, database, username) => {
     try {
         // add the local stream to the connection
         // noinspection JSUnresolvedFunction
@@ -66,7 +64,7 @@ export const sendAnswer = async (connection, localStream, remoteUserDetails, doA
     }
 }
 
-export const startCall = (yourConnection, remoteUserDetails) => {
+const startCall = (yourConnection, remoteUserDetails) => {
     // it should be called when we
     // received an answer from other peer to start the call
     // and set remote the description
@@ -74,8 +72,18 @@ export const startCall = (yourConnection, remoteUserDetails) => {
     yourConnection.setRemoteDescription(JSON.parse(remoteUserDetails.answer))
 }
 
-export const addCandidate = (yourConnection, remoteUserDetails) => {
+const addCandidate = (yourConnection, remoteUserDetails) => {
     // apply the new received candidate to the connection
     // noinspection JSIgnoredPromiseFromCall
     yourConnection.addIceCandidate(new RTCIceCandidate(JSON.parse(remoteUserDetails.candidate)))
+}
+
+export {
+    createOffer,
+    initiateLocalStream,
+    initiateConnection,
+    listenToConnectionEvents,
+    sendAnswer,
+    startCall,
+    addCandidate
 }
