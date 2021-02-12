@@ -2,7 +2,7 @@ import React from 'react'
 import firebase from "firebase/app"
 import 'firebase/database'
 import 'webrtc-adapter'
-import config from "./config"
+import config from "../config"
 import VideoChat from './VideoChat'
 import {
     addCandidate,
@@ -11,8 +11,8 @@ import {
     initiateLocalStream,
     listenToConnectionEvents,
     sendAnswer, startCall
-} from "./WebRTCModule";
-import {doAnswer, doCandidate, doLogin, doOffer} from "./FirebaseModule";
+} from "../modules/WebRTCModule";
+import {doAnswer, doCandidate, doLogin, doOffer} from "../modules/FirebaseModule";
 
 class VideoChatContainer extends React.Component {
     constructor(props) {
@@ -60,7 +60,9 @@ class VideoChatContainer extends React.Component {
         const {database, localStream, localConnection} = this.state
         listenToConnectionEvents(localConnection, username, userToCall, database, this.remoteVideoRef, doCandidate)
         // create an offer
-        await createOffer(localConnection, localStream, userToCall, doOffer, database, username)
+        await createOffer(localConnection, localStream, userToCall, doOffer, database, username).catch((error) => {
+            console.log(error + "(startCall)")
+        })
 
     }
 

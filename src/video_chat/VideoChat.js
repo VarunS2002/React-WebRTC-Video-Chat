@@ -1,5 +1,5 @@
 import React from 'react'
-import './App.css'
+import '../App.css'
 import 'firebase/database'
 
 export default class VideoChat extends React.Component {
@@ -36,14 +36,16 @@ export default class VideoChat extends React.Component {
         </div>
     }
 
+    bindEnterKey = (event) => {
+        if (event.key === "Enter" && document.activeElement.id === "login-input") {
+            document.getElementById("login-btn").click()
+        } else if (event.key === "Enter" && document.activeElement.id === "contact-input") {
+            document.getElementById("call-btn").click()
+        }
+    }
+
     renderForms = () => {
-        window.addEventListener('keypress', function (event) {
-            if (event.code === "Enter" && document.activeElement.id === "login-input") {
-                document.getElementById("login-btn").click();
-            } else if (event.code === "Enter" && document.activeElement.id === "contact-input") {
-                document.getElementById("call-btn").click();
-            }
-        });
+        window.addEventListener('keypress', this.bindEnterKey)
 
         return this.state.isLoggedIn ?
             <div key='a' className='form'>

@@ -68,8 +68,9 @@ const startCall = (yourConnection, remoteUserDetails) => {
     // it should be called when we
     // received an answer from other peer to start the call
     // and set remote the description
-    // noinspection JSIgnoredPromiseFromCall
-    yourConnection.setRemoteDescription(JSON.parse(remoteUserDetails.answer))
+    yourConnection.setRemoteDescription(JSON.parse(remoteUserDetails.answer)).catch((error) => {
+        console.log(error + " (startCall)")
+    })
 }
 
 const addCandidate = (yourConnection, remoteUserDetails) => {

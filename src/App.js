@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import VideoChatContainer from './VideoChatContainer';
+import VideoChatContainer from './video_chat/VideoChatContainer';
 
 function App() {
     return (
