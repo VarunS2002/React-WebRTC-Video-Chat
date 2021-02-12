@@ -33,49 +33,49 @@ export const initiateConnection = async () => {
     }
 }
 
-export const listenToConnectionEvents = (conn, username, remoteUsername, database, remoteVideoRef, doCandidate) => {
+export const listenToConnectionEvents = (connection, username, remoteUsername, database, remoteVideoRef, doCandidate) => {
     // listen for ice candidates
-    conn.onicecandidate = function (event) {
+    connection.onicecandidate = function (event) {
         if (event.candidate) {
             doCandidate(remoteUsername, event.candidate, database, username)
         }
     }
 
     // when a remote user adds stream to the peer connection, we display it
-    conn.ontrack = function (e) {
+    connection.ontrack = function (e) {
         if (remoteVideoRef.srcObject !== e.streams[0]) {
             remoteVideoRef.srcObject = e.streams[0]
         }
     }
 }
 
-export const sendAnswer = async (conn, localStream, notif, doAnswer, database, username) => {
+export const sendAnswer = async (connection, localStream, remoteUserDetails, doAnswer, database, username) => {
     try {
         // add the local stream to the connection
         // noinspection JSUnresolvedFunction
-        conn.addStream(localStream)
+        connection.addStream(localStream)
         // set the remote and local descriptions and create an answer
-        await conn.setRemoteDescription(JSON.parse(notif.offer))
+        await connection.setRemoteDescription(JSON.parse(remoteUserDetails.offer))
         // create an answer to an offer
-        const answer = await conn.createAnswer()
-        await conn.setLocalDescription(answer)
+        const answer = await connection.createAnswer()
+        await connection.setLocalDescription(answer)
         // send answer to the other peer
-        doAnswer(notif.from, answer, database, username)
+        doAnswer(remoteUserDetails.from, answer, database, username)
     } catch (exception) {
         console.error(exception)
     }
 }
 
-export const startCall = (yourConn, notif) => {
+export const startCall = (yourConnection, remoteUserDetails) => {
     // it should be called when we
     // received an answer from other peer to start the call
     // and set remote the description
     // noinspection JSIgnoredPromiseFromCall
-    yourConn.setRemoteDescription(JSON.parse(notif.answer))
+    yourConnection.setRemoteDescription(JSON.parse(remoteUserDetails.answer))
 }
 
-export const addCandidate = (yourConn, notif) => {
+export const addCandidate = (yourConnection, remoteUserDetails) => {
     // apply the new received candidate to the connection
     // noinspection JSIgnoredPromiseFromCall
-    yourConn.addIceCandidate(new RTCIceCandidate(JSON.parse(notif.candidate)))
+    yourConnection.addIceCandidate(new RTCIceCandidate(JSON.parse(remoteUserDetails.candidate)))
 }

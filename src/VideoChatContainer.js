@@ -81,31 +81,31 @@ class VideoChatContainer extends React.Component {
         this.remoteVideoRef = ref
     }
 
-    handleUpdate = (notif, username) => {
+    handleUpdate = (remoteUserDetails, username) => {
         const {database, localStream, localConnection} = this.state
-        // read the received notif and apply it
-        if (notif) {
-            switch (notif.type) {
+        // read the received remoteUserDetails and apply it
+        if (remoteUserDetails) {
+            switch (remoteUserDetails.type) {
                 case 'offer':
                     this.setState({
-                        connectedUser: notif.from
+                        connectedUser: remoteUserDetails.from
                     })
                     // listen to the connection events
-                    listenToConnectionEvents(localConnection, username, notif.from, database, this.remoteVideoRef, doCandidate)
+                    listenToConnectionEvents(localConnection, username, remoteUserDetails.from, database, this.remoteVideoRef, doCandidate)
                     // send an answer
                     // noinspection JSIgnoredPromiseFromCall
-                    sendAnswer(localConnection, localStream, notif, doAnswer, database, username)
+                    sendAnswer(localConnection, localStream, remoteUserDetails, doAnswer, database, username)
                     break;
                 case 'answer':
                     this.setState({
-                        connectedUser: notif.from
+                        connectedUser: remoteUserDetails.from
                     })
                     // start the call
-                    startCall(localConnection, notif)
+                    startCall(localConnection, remoteUserDetails)
                     break;
                 case 'candidate':
                     // add candidate to the connection
-                    addCandidate(localConnection, notif)
+                    addCandidate(localConnection, remoteUserDetails)
                     break;
                 default:
                     break;
