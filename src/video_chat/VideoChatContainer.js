@@ -30,16 +30,8 @@ class VideoChatContainer extends React.Component {
     componentDidMount = async () => {
         // initialize firebase
         firebase.initializeApp(config)
-        // getting local video stream
-        const localStream = await initiateLocalStream()
-        this.localVideoRef.srcObject = localStream
-        // create the local connection
-        const localConnection = await initiateConnection()
-        // set values in state
         this.setState({
-            database: firebase.database(),
-            localStream: localStream,
-            localConnection: localConnection
+            database: firebase.database()
         })
     }
 
@@ -67,6 +59,16 @@ class VideoChatContainer extends React.Component {
     }
 
     onLogin = async (username) => {
+        // getting local video stream
+        const localStream = await initiateLocalStream()
+        this.localVideoRef.srcObject = localStream
+        // create the local connection
+        const localConnection = await initiateConnection()
+        // set values in state
+        this.setState({
+            localStream: localStream,
+            localConnection: localConnection
+        })
         // do the login phase
         await doLogin(username, this.state.database, this.handleUpdate)
     }
