@@ -27,7 +27,10 @@ export default class VideoChat extends React.Component {
         return <div className={this.state.isLoggedIn ? 'videos active' : 'videos'}>
             <div>
                 <label>{this.state.username}</label>
-                <video ref={this.props.setLocalVideoRef} autoPlay playsInline/>
+                <video ref={this.props.setLocalVideoRef} autoPlay playsInline muted="muted"/>
+                {/*{this.props.connectedUser ?
+                    <video ref={this.props.setLocalVideoRef} autoPlay playsInline muted="muted"/> :
+                    <video ref={this.props.setLocalVideoRef} autoPlay playsInline/>}*/}
             </div>
             <div>
                 <label>{this.props.connectedUser}</label>
