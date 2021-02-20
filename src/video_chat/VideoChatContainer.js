@@ -61,6 +61,12 @@ class VideoChatContainer extends React.Component {
     onLogin = async (username) => {
         // getting local video stream
         const localStream = await initiateLocalStream()
+        // setting constraints for audio and video
+        const audioLocalStream = localStream.getTracks()[0]
+        const videoLocalStream = localStream.getTracks()[1]
+        await audioLocalStream.applyConstraints({echoCancellation: true, noiseSuppression: true})
+        await videoLocalStream.applyConstraints({frameRate: 60})
+
         this.localVideoRef.srcObject = localStream
         // create the local connection
         const localConnection = await initiateConnection()
