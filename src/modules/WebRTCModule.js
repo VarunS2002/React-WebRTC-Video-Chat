@@ -73,6 +73,13 @@ const startCall = (yourConnection, remoteUserDetails) => {
     })
 }
 
+const endCall = (remoteDisconnectedUserName = '') => {
+    if (remoteDisconnectedUserName !== '') {
+        alert(`Connection lost.\n${remoteDisconnectedUserName} has disconnected.`)
+    }
+    window.location.reload()
+}
+
 const addCandidate = (yourConnection, remoteUserDetails) => {
     // apply the new received candidate to the connection
     // noinspection JSIgnoredPromiseFromCall
@@ -86,5 +93,6 @@ export {
     listenToConnectionEvents,
     sendAnswer,
     startCall,
+    endCall,
     addCandidate
 }

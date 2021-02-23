@@ -10,7 +10,7 @@ import {
     initiateConnection,
     initiateLocalStream,
     listenToConnectionEvents,
-    sendAnswer, startCall
+    sendAnswer, startCall, endCall
 } from "../modules/WebRTCModule";
 import {doAnswer, doCandidate, doLogin, doOffer} from "../modules/FirebaseModule";
 
@@ -21,7 +21,8 @@ class VideoChatContainer extends React.Component {
             database: '',
             connectedUser: '',
             localStream: '',
-            localConnection: ''
+            localConnection: '',
+            youDisconnected: false
         }
         this.localVideoRef = React.createRef()
         this.remoteVideoRef = React.createRef()
@@ -87,6 +88,13 @@ class VideoChatContainer extends React.Component {
         this.remoteVideoRef = ref
     }
 
+    hasRemoteDisconnected = () => {
+        return (this.state.localConnection.iceConnectionState === "failed" ||
+            this.state.localConnection.iceConnectionState === "disconnected" ||
+            this.state.localConnection.iceConnectionState === "closed") && !this.state.youDisconnected;
+
+    }
+
     handleUpdate = (remoteUserDetails, username) => {
         const {database, localStream, localConnection} = this.state
         // read the received remoteUserDetails and apply it
@@ -96,6 +104,12 @@ class VideoChatContainer extends React.Component {
                     this.setState({
                         connectedUser: remoteUserDetails.from
                     })
+                    // eslint-disable-next-line react/no-direct-mutation-state
+                    this.state.localConnection.oniceconnectionstatechange = () => {
+                        if (this.hasRemoteDisconnected()) {
+                            endCall(this.state.connectedUser)
+                        }
+                    }
                     // listen to the connection events
                     listenToConnectionEvents(localConnection, username, remoteUserDetails.from, database, this.remoteVideoRef, doCandidate)
                     // send an answer
@@ -108,6 +122,12 @@ class VideoChatContainer extends React.Component {
                     })
                     // start the call
                     startCall(localConnection, remoteUserDetails)
+                    // eslint-disable-next-line react/no-direct-mutation-state
+                    this.state.localConnection.oniceconnectionstatechange = () => {
+                        if (this.hasRemoteDisconnected()) {
+                            endCall(this.state.connectedUser)
+                        }
+                    }
                     break;
                 case 'candidate':
                     // add candidate to the connection

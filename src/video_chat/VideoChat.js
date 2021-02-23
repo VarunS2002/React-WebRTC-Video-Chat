@@ -1,6 +1,7 @@
 import React from 'react'
 import '../App.css'
 import 'firebase/database'
+import {endCall} from "../modules/WebRTCModule"
 
 export default class VideoChat extends React.Component {
     constructor(props) {
@@ -28,6 +29,7 @@ export default class VideoChat extends React.Component {
             <div>
                 <label>{this.state.username}</label>
                 <video ref={this.props.setLocalVideoRef} autoPlay playsInline muted="muted"/>
+                {/*TODO: Self Microphone Test before call*/}
                 {/*{this.props.connectedUser ?
                     <video ref={this.props.setLocalVideoRef} autoPlay playsInline muted="muted"/> :
                     <video ref={this.props.setLocalVideoRef} autoPlay playsInline/>}*/}
@@ -36,6 +38,18 @@ export default class VideoChat extends React.Component {
                 <label>{this.props.connectedUser}</label>
                 <video ref={this.props.setRemoteVideoRef} autoPlay playsInline/>
             </div>
+        </div>
+    }
+
+    renderOptions = () => {
+        return <div className="options">
+            <button onClick={() => {
+                this.setState({
+                    youDisconnected: true
+                })
+                endCall()
+            }} id="end-call-btn" className="btn btn-primary">End Call
+            </button>
         </div>
     }
 
@@ -74,6 +88,7 @@ export default class VideoChat extends React.Component {
         return <section id="container" style={{marginTop: "-25px"}}>
             {this.props.connectedUser ? null : this.renderForms()}
             {this.renderVideos()}
+            {this.props.connectedUser ? this.renderOptions() : null}
         </section>
     }
 }
