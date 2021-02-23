@@ -6,8 +6,7 @@ function App() {
     return (
         <div className='app'>
             <h1>Video Chat</h1>
-            <h2 style={{marginTop: "5px", marginBottom: "0px"}}>React + WebRTC + Firebase</h2>
-            <br/><br/>
+            <h2>React + WebRTC + Firebase</h2>
             <VideoChatContainer/>
         </div>
     );

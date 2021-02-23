@@ -144,7 +144,7 @@ export default class VideoChat extends React.Component {
      * @return {JSX.Element}
      */
     render() {
-        return <section id="container" style={{marginTop: "-25px"}}>
+        return <section id="container" className={this.props.connectedUser ? 'container-call' : 'container-login'}>
             {/*Renders Login form if a call is not active*/}
             {this.props.connectedUser ? null : this.renderForms()}
             {/*Renders the video streams*/}
