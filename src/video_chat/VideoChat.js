@@ -3,7 +3,7 @@ import '../App.css'
 import 'firebase/database'
 import {endCall} from "../modules/WebRTCModule"
 
-export default class VideoChat extends React.Component {
+class VideoChat extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -154,3 +154,5 @@ export default class VideoChat extends React.Component {
         </section>
     }
 }
+
+export default VideoChat
