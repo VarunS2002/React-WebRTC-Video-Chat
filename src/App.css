@@ -3,7 +3,8 @@ body {
     justify-content: center;
     color: white;
     align-items: center;
-    background: linear-gradient(to right, #43cea2, #185a9d) no-repeat fixed;
+    /*background: linear-gradient(to right, #43cea2, #185a9d) no-repeat fixed;*/
+    background: #121212;
 }
 
 h1 {
@@ -76,4 +77,8 @@ video {
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
+}
+
+.options {
+    text-align: center;
 }
