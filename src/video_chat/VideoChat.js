@@ -24,7 +24,7 @@ export default class VideoChat extends React.Component {
         this.props.startCall(this.state.username, this.state.userToCall)
     }
 
-    renderVideos = () => {
+    renderVideos() {
         return <div className={this.state.isLoggedIn ? 'videos active' : 'videos'}>
             <div>
                 <label>{this.state.username}</label>
@@ -41,7 +41,7 @@ export default class VideoChat extends React.Component {
         </div>
     }
 
-    renderOptions = () => {
+    renderOptions() {
         return <div className="options">
             <button onClick={() => {
                 this.setState({
@@ -53,7 +53,7 @@ export default class VideoChat extends React.Component {
         </div>
     }
 
-    bindEnterKey = (event) => {
+    bindEnterKey(event) {
         if (event.key === "Enter" && document.activeElement.id === "login-input") {
             document.getElementById("login-btn").click()
         } else if (event.key === "Enter" && document.activeElement.id === "contact-input") {
@@ -65,7 +65,7 @@ export default class VideoChat extends React.Component {
         }
     }
 
-    renderForms = () => {
+    renderForms() {
         window.addEventListener('keypress', this.bindEnterKey)
 
         return this.state.isLoggedIn ?
