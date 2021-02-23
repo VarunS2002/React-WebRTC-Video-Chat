@@ -7,6 +7,7 @@ function App() {
         <div className='app'>
             <h1>Video Chat</h1>
             <h2 style={{marginTop: "5px", marginBottom: "0px"}}>React + WebRTC + Firebase</h2>
+            <br/><br/>
             <VideoChatContainer/>
         </div>
     );
