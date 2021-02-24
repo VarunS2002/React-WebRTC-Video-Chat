@@ -18,26 +18,45 @@ class VideoChatContainer extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            database: '',
+            /** @type {firebase.database.Database | undefined} */
+            database: undefined,
+            /** @type {string} */
             connectedUser: '',
-            localStream: '',
-            localConnection: '',
+            /** @type {MediaStream | undefined}*/
+            localStream: undefined,
+            /** @type {RTCPeerConnection | undefined}*/
+            localConnection: undefined,
+            /** @type {boolean} */
             youDisconnected: false
         }
+        /** @type {React.RefObject<HTMLVideoElement>} */
         this.localVideoRef = React.createRef()
+        /** @type {React.RefObject<HTMLVideoElement>} */
         this.remoteVideoRef = React.createRef()
     }
 
-    componentDidMount = async () => {
-        // initialize firebase
+    /**
+     * Initializes firebase database.
+     * It is called when the component is rendered
+     *
+     * @return {void}
+     */
+    componentDidMount() {
         firebase.initializeApp(config)
         this.setState({
             database: firebase.database()
         })
     }
 
+    /**
+     * Prevent re-render if not necessary
+     *
+     * @param nextProps
+     * @param nextState
+     *
+     * @return {boolean}
+     */
     shouldComponentUpdate(nextProps, nextState) {
-        // prevent rerender if not necessary
         if (this.state.database !== nextState.database) {
             return false
         } else if (this.state.localStream !== nextState.localStream) {
@@ -48,80 +67,131 @@ class VideoChatContainer extends React.Component {
         return true
     }
 
+    /**
+     * Starts listening to connection events and creates a call offer.
+     *
+     * @param {string} username
+     * @param {string} userToCall
+     *
+     * @return {Promise<void>}
+     */
     startCall = async (username, userToCall) => {
-        // listen to the events first
         const {database, localStream, localConnection} = this.state
+        // Listen to the events first
         listenToConnectionEvents(localConnection, username, userToCall, database, this.remoteVideoRef, doCandidate)
-        // create an offer
+        // Create an offer
         await createOffer(localConnection, localStream, userToCall, doOffer, database, username).catch((error) => {
             console.log(error + "(startCall)")
         })
 
     }
 
+    /**
+     * Initiates the localStream and localConnection and then calls doLogin.
+     *
+     * @param {string} username
+     *
+     * @return {Promise<void>}
+     */
     onLogin = async (username) => {
-        // getting local video stream
+        // Getting local video stream
+        /** @type {MediaStream | undefined} */
         const localStream = await initiateLocalStream()
-        // setting constraints for audio and video
+        // Setting constraints for audio and video
+        /** @type {MediaStreamTrack | undefined} */
         const audioLocalStream = localStream.getTracks()[0]
+        /** @type {MediaStreamTrack | undefined} */
         const videoLocalStream = localStream.getTracks()[1]
         await audioLocalStream.applyConstraints({echoCancellation: true, noiseSuppression: true})
         await videoLocalStream.applyConstraints({frameRate: 60})
-
+        // Setting the Reference
         this.localVideoRef.srcObject = localStream
-        // create the local connection
+        // Create the local connection
+        /** @type {RTCPeerConnection | undefined} */
         const localConnection = await initiateConnection()
-        // set values in state
+
         this.setState({
             localStream: localStream,
             localConnection: localConnection
         })
-        // do the login phase
+        // Perform Login
         await doLogin(username, this.state.database, this.handleUpdate)
     }
 
-    setLocalVideoRef = ref => {
+    /**
+     * Setting the <video> reference for the local video stream.
+     *
+     * @param {React.RefObject<HTMLVideoElement>} ref
+     *
+     * @return {void}
+     */
+    setLocalVideoRef = (ref) => {
         this.localVideoRef = ref
     }
 
-    setRemoteVideoRef = ref => {
+    /**
+     * Setting the <video> reference for the remote video stream.
+     *
+     * @param {React.RefObject<HTMLVideoElement>} ref
+     *
+     * @return {void}
+     */
+    setRemoteVideoRef = (ref) => {
         this.remoteVideoRef = ref
     }
 
-    hasRemoteDisconnected = () => {
+    /**
+     * Determines who disconnected from the call.
+     * Returns true if the remote user disconnected without any interference by the local user.
+     *
+     * @return {boolean}
+     */
+    hasRemoteDisconnected() {
         return (this.state.localConnection.iceConnectionState === "failed" ||
             this.state.localConnection.iceConnectionState === "disconnected" ||
             this.state.localConnection.iceConnectionState === "closed") && !this.state.youDisconnected;
 
     }
 
+    /**
+     * Handles various situations like answering, making calls or connecting users
+     *
+     * @param {object | null} remoteUserDetails
+     * @param {string} username
+     *
+     * @return {void}
+     */
     handleUpdate = (remoteUserDetails, username) => {
         const {database, localStream, localConnection} = this.state
-        // read the received remoteUserDetails and apply it
+        // Read the received remoteUserDetails and apply it
         if (remoteUserDetails) {
             switch (remoteUserDetails.type) {
+                // Situation where you receive a call
                 case 'offer':
                     this.setState({
                         connectedUser: remoteUserDetails.from
                     })
+                    // Set Event Listener for possible call termination
                     // eslint-disable-next-line react/no-direct-mutation-state
                     this.state.localConnection.oniceconnectionstatechange = () => {
                         if (this.hasRemoteDisconnected()) {
                             endCall(this.state.connectedUser)
                         }
                     }
-                    // listen to the connection events
+                    // Listen to the connection events
                     listenToConnectionEvents(localConnection, username, remoteUserDetails.from, database, this.remoteVideoRef, doCandidate)
-                    // send an answer
+                    // Send an answer
                     // noinspection JSIgnoredPromiseFromCall
                     sendAnswer(localConnection, localStream, remoteUserDetails, doAnswer, database, username)
                     break;
+                // Situation where you make a call
                 case 'answer':
                     this.setState({
                         connectedUser: remoteUserDetails.from
                     })
-                    // start the call
+                    // Start the call
                     startCall(localConnection, remoteUserDetails)
+                    // Set Event Listener for possible call termination
                     // eslint-disable-next-line react/no-direct-mutation-state
                     this.state.localConnection.oniceconnectionstatechange = () => {
                         if (this.hasRemoteDisconnected()) {
@@ -129,8 +199,8 @@ class VideoChatContainer extends React.Component {
                         }
                     }
                     break;
+                // Add the candidate to the connection
                 case 'candidate':
-                    // add candidate to the connection
                     addCandidate(localConnection, remoteUserDetails)
                     break;
                 default:
@@ -139,6 +209,11 @@ class VideoChatContainer extends React.Component {
         }
     }
 
+    /**
+     * Renders the VideoChat class which is the entry point of the website and passes the required properties.
+     *
+     * @return {JSX.Element}
+     */
     render() {
         return <VideoChat
             startCall={this.startCall}
