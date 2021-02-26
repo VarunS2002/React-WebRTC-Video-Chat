@@ -156,7 +156,7 @@ class VideoChatContainer extends React.Component {
     /**
      * Handles various situations like answering, making calls or connecting users
      *
-     * @param {object | null} remoteUserDetails
+     * @param {{type: string, from: string, candidate: string | null, answer: string | null, offer: string | null} | null} remoteUserDetails
      * @param {string} username
      *
      * @return {void}
@@ -164,48 +164,46 @@ class VideoChatContainer extends React.Component {
     handleUpdate = (remoteUserDetails, username) => {
         const {database, localStream, localConnection} = this.state
         // Read the received remoteUserDetails and apply it
-        if (remoteUserDetails) {
-            switch (remoteUserDetails.type) {
-                // Situation where you receive a call
-                case 'offer':
-                    this.setState({
-                        connectedUser: remoteUserDetails.from
-                    })
-                    // Set Event Listener for possible call termination
-                    // eslint-disable-next-line react/no-direct-mutation-state
-                    this.state.localConnection.oniceconnectionstatechange = () => {
-                        if (this.hasRemoteDisconnected()) {
-                            endCall(this.state.connectedUser)
-                        }
+        switch (remoteUserDetails.type) {
+            // Situation where you receive a call
+            case 'offer':
+                this.setState({
+                    connectedUser: remoteUserDetails.from
+                })
+                // Set Event Listener for possible call termination
+                // eslint-disable-next-line react/no-direct-mutation-state
+                this.state.localConnection.oniceconnectionstatechange = () => {
+                    if (this.hasRemoteDisconnected()) {
+                        endCall(this.state.connectedUser)
                     }
-                    // Listen to the connection events
-                    listenToConnectionEvents(localConnection, username, remoteUserDetails.from, database, this.remoteVideoRef, doCandidate)
-                    // Send an answer
-                    // noinspection JSIgnoredPromiseFromCall
-                    sendAnswer(localConnection, localStream, remoteUserDetails, doAnswer, database, username)
-                    break;
-                // Situation where you make a call
-                case 'answer':
-                    this.setState({
-                        connectedUser: remoteUserDetails.from
-                    })
-                    // Start the call
-                    startCall(localConnection, remoteUserDetails)
-                    // Set Event Listener for possible call termination
-                    // eslint-disable-next-line react/no-direct-mutation-state
-                    this.state.localConnection.oniceconnectionstatechange = () => {
-                        if (this.hasRemoteDisconnected()) {
-                            endCall(this.state.connectedUser)
-                        }
+                }
+                // Listen to the connection events
+                listenToConnectionEvents(localConnection, username, remoteUserDetails.from, database, this.remoteVideoRef, doCandidate)
+                // Send an answer
+                // noinspection JSIgnoredPromiseFromCall
+                sendAnswer(localConnection, localStream, remoteUserDetails, doAnswer, database, username)
+                break;
+            // Situation where you make a call
+            case 'answer':
+                this.setState({
+                    connectedUser: remoteUserDetails.from
+                })
+                // Start the call
+                startCall(localConnection, remoteUserDetails)
+                // Set Event Listener for possible call termination
+                // eslint-disable-next-line react/no-direct-mutation-state
+                this.state.localConnection.oniceconnectionstatechange = () => {
+                    if (this.hasRemoteDisconnected()) {
+                        endCall(this.state.connectedUser)
                     }
-                    break;
-                // Add the candidate to the connection
-                case 'candidate':
-                    addCandidate(localConnection, remoteUserDetails)
-                    break;
-                default:
-                    break;
-            }
+                }
+                break;
+            // Add the candidate to the connection
+            case 'candidate':
+                addCandidate(localConnection, remoteUserDetails)
+                break;
+            default:
+                break;
         }
     }
 
