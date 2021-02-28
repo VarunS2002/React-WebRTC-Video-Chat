@@ -32,7 +32,7 @@ const doLogin = async (username, database, handleUpdate) => {
  * Sends an offer object for the user to call by updating the database field of the remote user.
  *
  * @param {string} to
- * @param {RTCSessionDescription} offer
+ * @param {RTCSessionDescriptionInit} offer
  * @param {firebase.database.Database} database
  * @param {string} username
  *
@@ -50,7 +50,7 @@ const doOffer = async (to, offer, database, username) => {
  * Sends an answer object for the user to call by updating the database field of the remote user.
  *
  * @param {string} to
- * @param {RTCSessionDescription} answer
+ * @param {RTCSessionDescriptionInit} answer
  * @param {firebase.database.Database} database
  * @param {string} username
  *
