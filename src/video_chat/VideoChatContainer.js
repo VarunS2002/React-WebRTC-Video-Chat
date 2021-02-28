@@ -86,8 +86,8 @@ class VideoChatContainer extends React.Component {
         // Listen to the events first
         listenToConnectionEvents(localConnection, username, userToCall, database, this.remoteVideoRef, doCandidate)
         // Create an offer
-        await createOffer(localConnection, localStream, userToCall, doOffer, database, username).catch((error) => {
-            console.log(error + "(startCall)")
+        await createOffer(localConnection, localStream, userToCall, doOffer, database, username).catch((exception) => {
+            console.log(exception + "(startCall)")
         })
 
     }

@@ -68,9 +68,9 @@ const startCall = (yourConnection, remoteUserDetails) => {
     // it should be called when we
     // received an answer from other peer to start the call
     // and set remote the description
-    yourConnection.setRemoteDescription(JSON.parse(remoteUserDetails.answer)).catch((error) => {
-        console.log(error + " (startCall)")
-    })
+    yourConnection.setRemoteDescription(JSON.parse(remoteUserDetails.answer)).catch((exception) => {
+            console.log(exception + " (startCall)")
+        })
 }
 
 const endCall = (remoteDisconnectedUserName = '') => {
