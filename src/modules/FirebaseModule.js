@@ -1,7 +1,24 @@
+/**
+ * Logs in into Firebase after clearing old entries and sets an event listener for changes in the field of your username.
+ *
+ * @param {string} username
+ * @param {firebase.database.Database} database
+ * @param {function({type: string, from: string, candidate: string | undefined, answer: string | undefined, offer: string | undefined} ,string): void} handleUpdate
+ *
+ * @return {Promise<void>}
+ */
 const doLogin = async (username, database, handleUpdate) => {
-    await database.ref('/users/' + username).remove()
-    database.ref('/users/' + username).on('value', snapshot => {
+    // Reference representing the location of the username in the database
+    /** @type {firebase.database.Reference} */
+    const dbCurrentUserReference = database.ref('/users/' + username)
+    // Clears the old entries of the current user
+    await dbCurrentUserReference.remove()
+    // Set the event listener
+    dbCurrentUserReference.on('value', snapshot => {
+        // This event will trigger once with the initial data stored at this location
+        // and then trigger again each time the data changes
         try {
+            // Check if data for the username exists
             if (snapshot.exists()) {
                 handleUpdate(snapshot.val(), username)
             }
@@ -11,6 +28,16 @@ const doLogin = async (username, database, handleUpdate) => {
     })
 }
 
+/**
+ * Sends an offer object for the user to call by updating the database field of the remote user.
+ *
+ * @param {string} to
+ * @param {RTCSessionDescription} offer
+ * @param {firebase.database.Database} database
+ * @param {string} username
+ *
+ * @return {Promise<void>}
+ */
 const doOffer = async (to, offer, database, username) => {
     await database.ref('/users/' + to).set({
         type: 'offer',
@@ -19,6 +46,16 @@ const doOffer = async (to, offer, database, username) => {
     })
 }
 
+/**
+ * Sends an answer object for the user to call by updating the database field of the remote user.
+ *
+ * @param {string} to
+ * @param {RTCSessionDescription} answer
+ * @param {firebase.database.Database} database
+ * @param {string} username
+ *
+ * @return {Promise<void>}
+ */
 const doAnswer = async (to, answer, database, username) => {
     await database.ref('/users/' + to).update({
         type: 'answer',
@@ -27,8 +64,17 @@ const doAnswer = async (to, answer, database, username) => {
     })
 }
 
+/**
+ * Sends the new ICE Candidate to the peer by updating the database field of the remote user.
+ *
+ * @param {string} to
+ * @param {RTCIceCandidate} candidate
+ * @param {firebase.database.Database} database
+ * @param {string} username
+ *
+ * @return {Promise<void>}
+ */
 const doCandidate = async (to, candidate, database, username) => {
-    // send the new candidate to the peer
     await database.ref('/users/' + to).update({
         type: 'candidate',
         from: username,
