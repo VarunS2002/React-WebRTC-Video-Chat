@@ -116,8 +116,10 @@ class VideoChat extends React.Component {
      * @return {JSX.Element}
      */
     renderForms() {
+        // Sets event listener for every keypress to check if Enter key is clicked by calling bindEnterKey
         window.addEventListener('keypress', this.bindEnterKey)
 
+        // Renders the form
         return this.state.isLoggedIn ?
             // Rendered if user has not logged in
             <div key='a' className='form'>
