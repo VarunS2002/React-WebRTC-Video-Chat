@@ -37,7 +37,7 @@ class VideoChatContainer extends React.Component {
 
     /**
      * Initializes firebase database.
-     * It is called when the component is rendered
+     * It is called when the component is rendered.
      *
      * @return {void}
      */
@@ -49,7 +49,7 @@ class VideoChatContainer extends React.Component {
     }
 
     /**
-     * Prevent re-render if not necessary
+     * Prevent re-render if not necessary.
      *
      * @param {Readonly<P>} nextProps
      * @param {Readonly<S>} nextState
@@ -160,7 +160,7 @@ class VideoChatContainer extends React.Component {
     }
 
     /**
-     * Handles various situations like answering, making calls or connecting users
+     * Handles various situations like answering, making calls or connecting users.
      *
      * @param {{type: string, from: string, candidate: string | undefined, answer: string | undefined, offer: string | undefined} | undefined} remoteUserDetails
      * @param {string} username
