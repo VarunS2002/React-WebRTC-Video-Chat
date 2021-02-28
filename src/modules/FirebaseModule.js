@@ -3,7 +3,7 @@
  *
  * @param {string} username
  * @param {firebase.database.Database} database
- * @param {function({type: string, from: string, candidate: string | undefined, answer: string | undefined, offer: string | undefined} ,string): void} handleUpdate
+ * @param {function({type: string, from: string, candidate: string | undefined, answer: string | undefined, offer: string | undefined} ,string): void} handleUpdate - VideoChatContainer.handleUpdate
  *
  * @return {Promise<void>}
  */

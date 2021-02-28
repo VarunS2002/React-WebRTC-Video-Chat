@@ -162,7 +162,7 @@ class VideoChatContainer extends React.Component {
     /**
      * Handles various situations like answering, making calls or connecting users.
      *
-     * @param {{type: string, from: string, candidate: string | undefined, answer: string | undefined, offer: string | undefined} | undefined} remoteUserDetails
+     * @param {{type: string, from: string, candidate: string | undefined, answer: string | undefined, offer: string | undefined}} remoteUserDetails
      * @param {string} username
      *
      * @return {void}
