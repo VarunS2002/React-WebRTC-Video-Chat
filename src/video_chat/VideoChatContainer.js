@@ -51,17 +51,23 @@ class VideoChatContainer extends React.Component {
     /**
      * Prevent re-render if not necessary
      *
-     * @param nextProps
-     * @param nextState
+     * @param {Readonly<P>} nextProps
+     * @param {Readonly<S>} nextState
+     * @param {any} nextContext
      *
      * @return {boolean}
      */
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        // noinspection JSUnresolvedVariable
         if (this.state.database !== nextState.database) {
             return false
-        } else if (this.state.localStream !== nextState.localStream) {
+        } else
+            // noinspection JSUnresolvedVariable
+        if (this.state.localStream !== nextState.localStream) {
             return false
-        } else if (this.state.localConnection !== nextState.localConnection) {
+        } else
+            // noinspection JSUnresolvedVariable
+        if (this.state.localConnection !== nextState.localConnection) {
             return false
         }
         return true
