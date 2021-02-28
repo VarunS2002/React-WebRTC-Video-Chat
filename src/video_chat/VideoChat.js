@@ -120,21 +120,21 @@ class VideoChat extends React.Component {
         window.addEventListener('keypress', this.bindEnterKey)
 
         // Renders the form
-        return this.state.isLoggedIn ?
+        return !this.state.isLoggedIn ?
             // Rendered if user has not logged in
-            <div key='a' className='form'>
-                <label>Enter contact name to call:</label>
-                <input value={this.state.userToCall} type="text" id="contact-input" autoFocus
-                       onChange={e => this.setState({userToCall: e.target.value})}/>
-                <button onClick={this.onStartCallClicked} id="call-btn" className="btn btn-primary">Call</button>
-            </div>
-            :
-            // Rendered if user has logged in
-            <div key='b' className='form'>
+            <div className='form'>
                 <label>Enter your username:</label>
                 <input value={this.state.username} type="text" id="login-input" autoFocus
                        onChange={e => this.setState({username: e.target.value})}/>
                 <button onClick={this.onLoginClicked} id="login-btn" className="btn btn-primary">Login</button>
+            </div>
+            :
+            // Rendered if user has logged in
+            <div className='form'>
+                <label>Enter contact name to call:</label>
+                <input value={this.state.userToCall} type="text" id="contact-input" autoFocus
+                       onChange={e => this.setState({userToCall: e.target.value})}/>
+                <button onClick={this.onStartCallClicked} id="call-btn" className="btn btn-primary">Call</button>
             </div>
     }
 
