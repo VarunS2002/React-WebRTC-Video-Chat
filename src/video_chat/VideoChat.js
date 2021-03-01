@@ -2,6 +2,7 @@ import React from 'react'
 import '../App.css'
 import 'firebase/database'
 import {endCall} from "../modules/WebRTCModule"
+import {UserLoginPage, UserToCallPage} from "../pages/LoginPage";
 
 class VideoChat extends React.Component {
     constructor(props) {
@@ -33,10 +34,10 @@ class VideoChat extends React.Component {
      * It calls the startCall function and passes the required parameters.
      * It is called when the Call button is clicked.
      *
-     * @return {void}
+     * @return {Promise<void>}
      */
-    onStartCallClicked = () => {
-        this.props.startCall(this.state.username, this.state.userToCall)
+    onStartCallClicked = async () => {
+        await this.props.startCall(this.state.username, this.state.userToCall)
     }
 
     /**
@@ -97,16 +98,34 @@ class VideoChat extends React.Component {
      *
      * @return {void}
      */
-    bindEnterKey(event) {
+    bindEnterKey = async (event) => {
         if (event.key === "Enter" && document.activeElement.id === "login-input") {
-            document.getElementById("login-btn").click()
+            await this.onLoginClicked()
         } else if (event.key === "Enter" && document.activeElement.id === "contact-input") {
-            try {
-                document.getElementById("call-btn").click()
-            } catch (exception) {
-                console.log(exception)
-            }
+            await this.onStartCallClicked()
         }
+    }
+
+    /**
+     * Sets the value of username in the state.
+     *
+     * @param {string} username
+     *
+     * @return {void}
+     */
+    setUsername = (username) => {
+        this.setState({username: username})
+    }
+
+    /**
+     * Sets the value of userToCall in the state.
+     *
+     * @param {string} userToCall
+     *
+     * @return {void}
+     */
+    setUserToCall = (userToCall) => {
+        this.setState({userToCall: userToCall})
     }
 
     /**
@@ -122,20 +141,16 @@ class VideoChat extends React.Component {
         // Renders the form
         return !this.state.isLoggedIn ?
             // Rendered if user has not logged in
-            <div className='form'>
-                <label>Enter your username:</label>
-                <input value={this.state.username} type="text" id="login-input" autoFocus
-                       onChange={e => this.setState({username: e.target.value})}/>
-                <button onClick={this.onLoginClicked} id="login-btn" className="btn btn-primary">Login</button>
-            </div>
+            <UserLoginPage
+                setUsername={this.setUsername}
+                onLoginClicked={this.onLoginClicked}
+            />
             :
             // Rendered if user has logged in
-            <div className='form'>
-                <label>Enter contact name to call:</label>
-                <input value={this.state.userToCall} type="text" id="contact-input" autoFocus
-                       onChange={e => this.setState({userToCall: e.target.value})}/>
-                <button onClick={this.onStartCallClicked} id="call-btn" className="btn btn-primary">Call</button>
-            </div>
+            <UserToCallPage
+                setUserToCall={this.setUserToCall}
+                onStartCallClicked={this.onStartCallClicked}
+            />
     }
 
     /**
