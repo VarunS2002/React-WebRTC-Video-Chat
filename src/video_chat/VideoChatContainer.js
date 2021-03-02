@@ -2,6 +2,7 @@ import React from 'react'
 import firebase from "firebase/app"
 import 'firebase/database'
 import 'webrtc-adapter'
+import '../App.css'
 import config from "../config"
 import VideoChat from './VideoChat'
 import {
@@ -219,13 +220,15 @@ class VideoChatContainer extends React.Component {
      * @return {JSX.Element}
      */
     render() {
-        return <VideoChat
-            startCall={this.startCall}
-            onLogin={this.onLogin}
-            setLocalVideoRef={this.setLocalVideoRef}
-            setRemoteVideoRef={this.setRemoteVideoRef}
-            connectedUser={this.state.connectedUser}
-        />
+        return <div className='app'>
+            <VideoChat
+                startCall={this.startCall}
+                onLogin={this.onLogin}
+                setLocalVideoRef={this.setLocalVideoRef}
+                setRemoteVideoRef={this.setRemoteVideoRef}
+                connectedUser={this.state.connectedUser}
+            />
+        </div>
     }
 }
 

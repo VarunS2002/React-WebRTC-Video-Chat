@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import VideoChatContainer from "./video_chat/VideoChatContainer";
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
     <React.StrictMode>
-        <App/>
+        <VideoChatContainer/>
     </React.StrictMode>,
     document.getElementById('root')
 );
