@@ -106,7 +106,7 @@ function UserToCallPage(props) {
                     <Typography component="h2" variant="h5">
                         Video Chat
                     </Typography>
-                    <form className={classes.form} noValidate>
+                    <div className={classes.form}>
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -139,7 +139,7 @@ function UserToCallPage(props) {
                         >
                             Switch Theme
                         </Button>
-                    </form>
+                    </div>
                 </div>
             </Container>
         </ThemeProvider>
