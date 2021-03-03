@@ -14,6 +14,31 @@ import {ClassNameMap} from '@material-ui/core/styles/withStyles';
 import {Theme} from '@material-ui/core/styles/createMuiTheme';
 import {dark, light, useStyles} from "./Styles";
 
+/** @type {boolean} */
+let isUsernameValid = false
+
+/**
+ * Validates the entered username.
+ * Username must have only letters and numbers and has to be from 4-20 characters long.
+ *
+ * @param {string} username
+ *
+ * @return {boolean}
+ */
+const validateUsername = (username) => {
+    // Regex Expression to match only letters and numbers
+    /** @type RegExp */
+    const regexAlphaNumeric = /^[0-9a-zA-Z]+$/
+    // Matches the expression with the username
+    /** @type {boolean} */
+    const isAlphaNumeric = !!username.match(regexAlphaNumeric)
+    // Validates length of the username (4-20 characters)
+    /** @type {boolean} */
+    const is4to20Characters = username.length >= 4 && username.length <= 20
+
+    return isAlphaNumeric && is4to20Characters
+}
+
 /**
  * User Login Page Form functional component using Material UI components.
  *
@@ -33,6 +58,7 @@ function UserLoginPage({setUsername, onLoginClicked}) {
     const appliedTheme = createMuiTheme(isDarkTheme ? dark : light, {
         palette: {primary: {main: '#1A73E8'}}
     })
+
     return (
         <ThemeProvider theme={appliedTheme}>
             <Container component="main" maxWidth="xs">
@@ -51,7 +77,11 @@ function UserLoginPage({setUsername, onLoginClicked}) {
                             required
                             fullWidth
                             id="login-input"
-                            onChange={(event) => setUsername(event.target.value)}
+                            onChange={(event) => {
+                                // Sets value of isUsernameValid everytime you update the TextField
+                                isUsernameValid = validateUsername(event.target.value)
+                                setUsername(event.target.value)
+                            }}
                             label="User ID"
                             autoFocus
                         />
@@ -62,7 +92,9 @@ function UserLoginPage({setUsername, onLoginClicked}) {
                             color="primary"
                             className={classes.button}
                             id="login-btn"
-                            onClick={onLoginClicked}
+                            onClick={() => isUsernameValid ?
+                                onLoginClicked() :
+                                alert("User ID must have only letters and numbers and has to be from 4-20 characters long")}
                         >
                             Log In
                         </Button>

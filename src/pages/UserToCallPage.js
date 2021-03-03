@@ -14,6 +14,31 @@ import {ClassNameMap} from '@material-ui/core/styles/withStyles';
 import {Theme} from '@material-ui/core/styles/createMuiTheme';
 import {dark, light, useStyles} from "./Styles";
 
+/** @type {boolean} */
+let isUserToCallValid = false
+
+/**
+ * Validates the entered userToCall.
+ * User to call must have only letters and numbers and has to be from 4-20 characters long.
+ *
+ * @param {string} userToCall
+ *
+ * @return {boolean}
+ */
+const validateUserToCall = (userToCall) => {
+    // Regex Expression to match only letters and numbers
+    /** @type RegExp */
+    const regexAlphaNumeric = /^[0-9a-zA-Z]+$/
+    // Matches the expression with the userToCall
+    /** @type {boolean} */
+    const isAlphaNumeric = !!userToCall.match(regexAlphaNumeric)
+    // Validates length of the userToCall (4-20 characters)
+    /** @type {boolean} */
+    const is4to20Characters = userToCall.length >= 4 && userToCall.length <= 20
+
+    return isAlphaNumeric && is4to20Characters
+}
+
 /**
  * User to Call Page Form functional component using Material UI components.
  *
@@ -33,6 +58,7 @@ function UserToCallPage({setUserToCall, onStartCallClicked}) {
     const appliedTheme = createMuiTheme(isDarkTheme ? dark : light, {
         palette: {primary: {main: '#1A73E8'}}
     })
+
     return (
         <ThemeProvider theme={appliedTheme}>
             <Container component="main" maxWidth="xs">
@@ -51,7 +77,11 @@ function UserToCallPage({setUserToCall, onStartCallClicked}) {
                             required
                             fullWidth
                             id="contact-input"
-                            onChange={(event) => setUserToCall(event.target.value)}
+                            onChange={(event) => {
+                                // Sets value of isUserToCallValid everytime you update the TextField
+                                isUserToCallValid = validateUserToCall(event.target.value)
+                                setUserToCall(event.target.value)
+                            }}
                             label="Contact ID"
                             autoFocus
                         />
@@ -62,7 +92,9 @@ function UserToCallPage({setUserToCall, onStartCallClicked}) {
                             color="primary"
                             className={classes.button}
                             id="call-btn"
-                            onClick={onStartCallClicked}
+                            onClick={() => isUserToCallValid ?
+                                onStartCallClicked() :
+                                alert("Contact ID must have only letters and numbers and has to be from 4-20 characters long")}
                         >
                             Call
                         </Button>
