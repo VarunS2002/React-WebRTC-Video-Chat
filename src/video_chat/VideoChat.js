@@ -4,6 +4,7 @@ import 'firebase/database'
 import {endCall} from "../modules/WebRTCModule"
 import UserLoginPage from "../pages/UserLoginPage";
 import UserToCallPage from "../pages/UserToCallPage";
+import CallPage from "../pages/CallPage";
 
 class VideoChat extends React.Component {
     constructor(props) {
@@ -55,29 +56,17 @@ class VideoChat extends React.Component {
     }
 
     /**
-     * Displays the video streams in frames.
-     * It is called when you log in and displays your own video stream.
-     * It displays the video streams of both the users when a call is active.
+     * Displays the video frames and the calling screen.
      *
      * @return {JSX.Element}
      */
     renderVideos() {
-        return <div className={this.state.isLoggedIn ? 'videos active' : 'videos'}>
-            {/*Displays your video stream*/}
-            <div>
-                <label>{this.state.username}</label>
-                <video ref={this.props.setLocalVideoRef} autoPlay playsInline muted="muted"/>
-                {/*TODO: Self Microphone Test before call*/}
-                {/*{this.props.connectedUser ?
-                    <video ref={this.props.setLocalVideoRef} autoPlay playsInline muted="muted"/> :
-                    <video ref={this.props.setLocalVideoRef} autoPlay playsInline/>}*/}
-            </div>
-            {/*Displays the other person's video stream*/}
-            <div>
-                <label>{this.props.connectedUser}</label>
-                <video ref={this.props.setRemoteVideoRef} autoPlay playsInline/>
-            </div>
-        </div>
+        return <CallPage isLoggedIn={this.state.isLoggedIn}
+                         username={this.state.username}
+                         setLocalVideoRef={this.props.setLocalVideoRef}
+                         connectedUser={this.props.connectedUser}
+                         setRemoteVideoRef={this.props.setRemoteVideoRef}
+        />
     }
 
     /**
