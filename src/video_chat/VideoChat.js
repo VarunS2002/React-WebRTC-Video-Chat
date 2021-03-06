@@ -66,19 +66,8 @@ class VideoChat extends React.Component {
                          setLocalVideoRef={this.props.setLocalVideoRef}
                          connectedUser={this.props.connectedUser}
                          setRemoteVideoRef={this.props.setRemoteVideoRef}
+                         onEndCallClicked={this.onEndCallClicked}
         />
-    }
-
-    /**
-     * Creates the Option buttons.
-     * It is called if the call is active.
-     *
-     * @return {JSX.Element}
-     */
-    renderOptions() {
-        return <div className="options">
-            <button onClick={this.onEndCallClicked} id="end-call-btn" className="btn btn-primary">End Call</button>
-        </div>
     }
 
     /**
@@ -154,10 +143,8 @@ class VideoChat extends React.Component {
         return <section id="container" className={this.props.connectedUser ? 'container-call' : 'container-login'}>
             {/*Renders Login form if a call is not active*/}
             {this.props.connectedUser ? null : this.renderForms()}
-            {/*Renders the video streams*/}
+            {/*Renders the video streams with the options*/}
             {this.renderVideos()}
-            {/*Renders the Option buttons if a call is active*/}
-            {this.props.connectedUser ? this.renderOptions() : null}
         </section>
     }
 }

@@ -37,6 +37,12 @@ const useStyles = makeStyles((theme) => ({
     button: {
         margin: theme.spacing(1, 0, 0),
     },
+    avatar_end_call: {
+        margin: "auto",
+        backgroundColor: '#e52f2f',
+        color: "white",
+        cursor: "pointer"
+    },
 }));
 
 export {
