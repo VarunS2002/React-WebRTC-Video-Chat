@@ -1,6 +1,21 @@
 import React from "react";
 
-
+/**
+ * Call Page functional component.
+ * Displays the video streams in frames.
+ * When you log in, it displays your own video stream.
+ * It displays the video streams of both the users when a call is active.
+ *
+ * @param {boolean} isLoggedIn
+ * @param {string} username
+ * @param {function(React.RefObject<HTMLVideoElement>): void} setLocalVideoRef
+ * @param {string} connectedUser
+ * @param {function(React.RefObject<HTMLVideoElement>): void} setRemoteVideoRef
+ *
+ * @return {JSX.Element}
+ *
+ * @constructor
+ */
 function CallPage({isLoggedIn, username, setLocalVideoRef, connectedUser, setRemoteVideoRef}) {
 
     return (
