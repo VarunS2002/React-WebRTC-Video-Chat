@@ -14,6 +14,8 @@ import {ClassNameMap} from '@material-ui/core/styles/withStyles';
 import {Theme} from '@material-ui/core/styles/createMuiTheme';
 import {dark, light, useStyles} from "./Styles";
 
+/** @type {string} */
+let yourUsername = ''
 /** @type {boolean} */
 let isUsernameValid = false
 
@@ -21,20 +23,28 @@ let isUsernameValid = false
  * Validates the entered username.
  * Username must have only letters and numbers and has to be from 4-20 characters long.
  *
- * @param {string} username
+ * @param {boolean} onClick
  *
  * @return {boolean}
  */
-const validateUsername = (username) => {
+const validateUsername = (onClick = false) => {
     // Regex Expression to match only letters and numbers
     /** @type RegExp */
     const regexAlphaNumeric = /^[0-9a-zA-Z]+$/
     // Matches the expression with the username
     /** @type {boolean} */
-    const isAlphaNumeric = !!username.match(regexAlphaNumeric)
-    // Validates length of the username (4-20 characters)
+    const isAlphaNumeric = !!yourUsername.match(regexAlphaNumeric)
+    if (onClick && !isAlphaNumeric) {
+        alert("User ID must have only letters and numbers")
+        return false
+    }
+    // Validates length of the yourUsername (4-20 characters)
     /** @type {boolean} */
-    const is4to20Characters = username.length >= 4 && username.length <= 20
+    const is4to20Characters = yourUsername.length >= 4 && yourUsername.length <= 20
+    if (onClick && !is4to20Characters) {
+        alert("User ID must be from 4-20 characters long")
+        return false
+    }
 
     return isAlphaNumeric && is4to20Characters
 }
@@ -78,8 +88,9 @@ function UserLoginPage({setUsername, onLoginClicked}) {
                             fullWidth
                             id="login-input"
                             onChange={(event) => {
+                                yourUsername = event.target.value
                                 // Sets value of isUsernameValid everytime you update the TextField
-                                isUsernameValid = validateUsername(event.target.value)
+                                isUsernameValid = validateUsername()
                                 setUsername(event.target.value)
                             }}
                             label="User ID"
@@ -92,9 +103,7 @@ function UserLoginPage({setUsername, onLoginClicked}) {
                             color="primary"
                             className={classes.button}
                             id="login-btn"
-                            onClick={() => isUsernameValid ?
-                                onLoginClicked() :
-                                alert("User ID must have only letters and numbers and has to be from 4-20 characters long")}
+                            onClick={() => isUsernameValid ? onLoginClicked() : validateUsername(true)}
                         >
                             Log In
                         </Button>

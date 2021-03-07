@@ -127,6 +127,7 @@ class VideoChat extends React.Component {
             :
             // Rendered if user has logged in
             <UserToCallPage
+                username={this.state.username}
                 setUserToCall={this.setUserToCall}
                 onStartCallClicked={this.onStartCallClicked}
             />
