@@ -23,33 +23,36 @@ let isUserToCallValid = false
 
 /**
  * Validates the entered userToCall.
- * User to call must have only letters and numbers and has to be from 4-20 characters long.
+ * User to call must have only letters and numbers
+ * It has to be from 4-20 characters long.
+ * You cannot call yourself.
  *
- * @param {boolean} onClick
+ * @param {boolean} showMistakes
  *
  * @return {boolean}
  */
-const validateUserToCall = (onClick = false) => {
+const validateUserToCall = (showMistakes = false) => {
     // Regex Expression to match only letters and numbers
     /** @type RegExp */
     const regexAlphaNumeric = /^[0-9a-zA-Z]+$/
     // Matches the expression with the userToCall
     /** @type {boolean} */
     const isAlphaNumeric = !!userToCall.match(regexAlphaNumeric)
-    if (onClick && !isAlphaNumeric) {
+    if (showMistakes && !isAlphaNumeric) {
         alert("Contact ID must have only letters and numbers")
         return false
     }
     // Validates length of the userToCall (4-20 characters)
     /** @type {boolean} */
     const is4to20Characters = userToCall.length >= 4 && userToCall.length <= 20
-    if (onClick && !is4to20Characters) {
+    if (showMistakes && !is4to20Characters) {
         alert("Contact ID must be from 4-20 characters long")
         return false
     }
+    // Validates whether you are trying to call yourself
     /** @type {boolean} */
     const notCallingYourself = userToCall !== yourUsername
-    if (onClick && !notCallingYourself) {
+    if (showMistakes && !notCallingYourself) {
         alert("Contact ID cannot be the same as User ID")
         return false
     }
@@ -71,6 +74,7 @@ const validateUserToCall = (onClick = false) => {
 function UserToCallPage({username, setUserToCall, onStartCallClicked}) {
     /** @type {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call" | "avatar_mute_remote">} */
     const classes = useStyles();
+    // TODO: Fix theme resetting to dark from light
     /** @type {[boolean, Dispatch<SetStateAction<boolean>>]} */
     const [isDarkTheme, setTheme] = useState(true)
     /** @type {Theme} */
@@ -98,9 +102,11 @@ function UserToCallPage({username, setUserToCall, onStartCallClicked}) {
                             fullWidth
                             id="contact-input"
                             onChange={(event) => {
+                                // Sets value of userToCall locally
                                 userToCall = event.target.value
                                 // Sets value of isUserToCallValid everytime you update the TextField
                                 isUserToCallValid = validateUserToCall()
+                                // Sets value of userToCall in state
                                 setUserToCall(event.target.value)
                             }}
                             label="Contact ID"
