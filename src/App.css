@@ -14,6 +14,8 @@
 .logged-in-local-video {
     width: 55%;
     height: 100%;
+    border-top-left-radius: 0.8ch;
+    border-top-right-radius: 0.8ch;
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
 }
@@ -75,4 +77,28 @@
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.name-labels {
+    color: white;
+    font-size: 20px;
+    background-color: gray;
+    border-bottom-left-radius: 0.5ch;
+    border-bottom-right-radius: 0.5ch;
+}
+
+.not-connected-labels {
+    width: 55%;
+}
+
+.connected-labels {
+    width: 100%;
+}
+
+#remote-username-label.connected-labels {
+    margin-left: 7px;
+}
+
+#your-username-label.connected-labels {
+    margin-right: 7px;
 }
