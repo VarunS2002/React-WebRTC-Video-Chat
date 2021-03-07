@@ -46,6 +46,8 @@ const muteRemote = () => {
 function CallPage({isLoggedIn, username, setLocalVideoRef, connectedUser, setRemoteVideoRef, onEndCallClicked}) {
     /** @type {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call" | "avatar_mute_remote">} */
     const classes = useStyles();
+    /** @type {string} */
+    let yourUsernameLabel = connectedUser ? 'You' : username
 
     return (
         <div className="call-page">
@@ -55,7 +57,7 @@ function CallPage({isLoggedIn, username, setLocalVideoRef, connectedUser, setRem
                 <div id="local-video-frame" className="div-video-frames">
                     <video ref={setLocalVideoRef} autoPlay playsInline muted="muted" id="local-video"
                            className={isLoggedIn ? (connectedUser ? 'connected-video' : 'logged-in-local-video') : null}/>
-                    <label>{username}</label>
+                    <label>{yourUsernameLabel}</label>
                 </div>
                 {/*Displays the other person's video stream*/}
                 <div id="remote-video-frame" className="div-video-frames">
