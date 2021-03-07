@@ -15,8 +15,21 @@ class VideoChat extends React.Component {
             /** @type {string} */
             userToCall: '',
             /** @type {string} */
-            username: ''
+            username: '',
+            /** @type {boolean} */
+            isDarkTheme: true
         }
+    }
+
+    /**
+     * Toggles value of theme in the state.
+     *
+     * @return {void}
+     */
+    switchTheme = () => {
+        this.setState({
+            isDarkTheme: !this.state.isDarkTheme
+        })
     }
 
     /**
@@ -123,6 +136,8 @@ class VideoChat extends React.Component {
             <UserLoginPage
                 setUsername={this.setUsername}
                 onLoginClicked={this.onLoginClicked}
+                isDarkThemeState={this.state.isDarkTheme}
+                switchTheme={this.switchTheme}
             />
             :
             // Rendered if user has logged in
@@ -130,6 +145,8 @@ class VideoChat extends React.Component {
                 username={this.state.username}
                 setUserToCall={this.setUserToCall}
                 onStartCallClicked={this.onStartCallClicked}
+                isDarkThemeState={this.state.isDarkTheme}
+                switchTheme={this.switchTheme}
             />
     }
 

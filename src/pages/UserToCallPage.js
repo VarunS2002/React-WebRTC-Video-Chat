@@ -66,17 +66,18 @@ const validateUserToCall = (showMistakes = false) => {
  * @param {string} username
  * @param {function(string): void} setUserToCall
  * @param {function(): Promise<void>} onStartCallClicked
+ * @param {boolean} isDarkThemeState
+ * @param {function(): void} switchTheme
  *
  * @return {JSX.Element}
  *
  * @constructor
  */
-function UserToCallPage({username, setUserToCall, onStartCallClicked}) {
+function UserToCallPage({username, setUserToCall, onStartCallClicked, isDarkThemeState, switchTheme}) {
     /** @type {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call" | "avatar_mute_remote">} */
     const classes = useStyles();
-    // TODO: Fix theme resetting to dark from light
     /** @type {[boolean, Dispatch<SetStateAction<boolean>>]} */
-    const [isDarkTheme, setTheme] = useState(true)
+    const [isDarkTheme, setTheme] = useState(isDarkThemeState)
     /** @type {Theme} */
     const appliedTheme = createMuiTheme(isDarkTheme ? dark : light, {
         palette: {primary: {main: '#1A73E8'}}
@@ -130,7 +131,10 @@ function UserToCallPage({username, setUserToCall, onStartCallClicked}) {
                             color="primary"
                             className={classes.button}
                             id="theme-btn"
-                            onClick={() => setTheme(!isDarkTheme)}
+                            onClick={() => {
+                                setTheme(!isDarkTheme)
+                                switchTheme()
+                            }}
                         >
                             Switch Theme
                         </Button>

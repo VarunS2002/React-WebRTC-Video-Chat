@@ -55,16 +55,18 @@ const validateUsername = (showMistakes = false) => {
  *
  * @param {function(string): void} setUsername
  * @param {function(): Promise<void>} onLoginClicked
+ * @param {boolean} isDarkThemeState
+ * @param {function(): void} switchTheme
  *
  * @return {JSX.Element}
  *
  * @constructor
  */
-function UserLoginPage({setUsername, onLoginClicked}) {
+function UserLoginPage({setUsername, onLoginClicked, isDarkThemeState, switchTheme}) {
     /** @type {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call" | "avatar_mute_remote">} */
     const classes = useStyles();
     /** @type {[boolean, Dispatch<SetStateAction<boolean>>]} */
-    const [isDarkTheme, setTheme] = useState(true)
+    const [isDarkTheme, setTheme] = useState(isDarkThemeState)
     /** @type {Theme} */
     const appliedTheme = createMuiTheme(isDarkTheme ? dark : light, {
         palette: {primary: {main: '#1A73E8'}}
@@ -117,7 +119,10 @@ function UserLoginPage({setUsername, onLoginClicked}) {
                             color="primary"
                             className={classes.button}
                             id="theme-btn"
-                            onClick={() => setTheme(!isDarkTheme)}
+                            onClick={() => {
+                                setTheme(!isDarkTheme)
+                                switchTheme()
+                            }}
                         >
                             Switch Theme
                         </Button>
