@@ -21,27 +21,28 @@ let isUsernameValid = false
 
 /**
  * Validates the entered username.
- * Username must have only letters and numbers and has to be from 4-20 characters long.
+ * Username must have only letters and numbers.
+ * It has to be from 4-20 characters long.
  *
- * @param {boolean} onClick
+ * @param {boolean} showMistakes
  *
  * @return {boolean}
  */
-const validateUsername = (onClick = false) => {
+const validateUsername = (showMistakes = false) => {
     // Regex Expression to match only letters and numbers
     /** @type RegExp */
     const regexAlphaNumeric = /^[0-9a-zA-Z]+$/
     // Matches the expression with the username
     /** @type {boolean} */
     const isAlphaNumeric = !!yourUsername.match(regexAlphaNumeric)
-    if (onClick && !isAlphaNumeric) {
+    if (showMistakes && !isAlphaNumeric) {
         alert("User ID must have only letters and numbers")
         return false
     }
     // Validates length of the yourUsername (4-20 characters)
     /** @type {boolean} */
     const is4to20Characters = yourUsername.length >= 4 && yourUsername.length <= 20
-    if (onClick && !is4to20Characters) {
+    if (showMistakes && !is4to20Characters) {
         alert("User ID must be from 4-20 characters long")
         return false
     }
@@ -88,9 +89,11 @@ function UserLoginPage({setUsername, onLoginClicked}) {
                             fullWidth
                             id="login-input"
                             onChange={(event) => {
+                                // Sets value of username locally
                                 yourUsername = event.target.value
                                 // Sets value of isUsernameValid everytime you update the TextField
                                 isUsernameValid = validateUsername()
+                                // Sets value of username in state
                                 setUsername(event.target.value)
                             }}
                             label="User ID"
