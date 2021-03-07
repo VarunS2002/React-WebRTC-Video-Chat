@@ -6,12 +6,36 @@
     padding-top: 200px;
 }
 
-video {
-    /*width: 355px;*/
+.div-video-frames {
+    flex-direction: column;
+    margin: auto;
+}
+
+.logged-in-local-video {
     width: 55%;
     height: 100%;
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
+}
+
+.logged-in-remote-video {
+    width: 0;
+    height: 0;
+}
+
+.connected-video {
+    width: 100%;
+    height: 100%;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+#local-video.connected-video {
+    margin-right: 7px;
+}
+
+#remote-video.connected-video {
+    margin-left: 7px;
 }
 
 .container-login {
@@ -39,14 +63,16 @@ video {
 
 .videos div {
     display: flex;
-    flex-direction: column-reverse;
     align-items: center;
     margin: auto;
+    text-align: center;
 }
 
 .options {
     text-align: center;
     flex-direction: row;
     display: inline-flex;
-    margin: auto;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }

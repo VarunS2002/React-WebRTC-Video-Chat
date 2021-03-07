@@ -52,14 +52,16 @@ function CallPage({isLoggedIn, username, setLocalVideoRef, connectedUser, setRem
             {/*Hide the video tag until user has logged in*/}
             <div className={isLoggedIn ? 'videos active' : 'videos'}>
                 {/*Displays your video stream*/}
-                <div>
+                <div id="local-video-frame" className="div-video-frames">
+                    <video ref={setLocalVideoRef} autoPlay playsInline muted="muted" id="local-video"
+                           className={isLoggedIn ? (connectedUser ? 'connected-video' : 'logged-in-local-video') : null}/>
                     <label>{username}</label>
-                    <video ref={setLocalVideoRef} autoPlay playsInline muted="muted"/>
                 </div>
                 {/*Displays the other person's video stream*/}
-                <div>
+                <div id="remote-video-frame" className="div-video-frames">
+                    <video ref={setRemoteVideoRef} autoPlay playsInline id="remote-video"
+                           className={isLoggedIn ? (connectedUser ? 'connected-video' : 'logged-in-remote-video') : null}/>
                     <label>{connectedUser}</label>
-                    <video ref={setRemoteVideoRef} autoPlay playsInline id="remote-video"/>
                 </div>
             </div>
             {/*Creates the Option buttons if a call is active*/}
