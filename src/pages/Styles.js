@@ -1,8 +1,8 @@
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles"
 // eslint-disable-next-line
-import {ClassNameMap} from '@material-ui/core/styles/withStyles';
+import {ClassNameMap} from '@material-ui/core/styles/withStyles'
 // eslint-disable-next-line
-import {Theme} from '@material-ui/core/styles/createMuiTheme';
+import {Theme} from '@material-ui/core/styles/createMuiTheme'
 
 
 // Property for light theme
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
         padding: "25px",
         marginLeft: "5px"
     },
-}));
+}))
 
 export {
     light,

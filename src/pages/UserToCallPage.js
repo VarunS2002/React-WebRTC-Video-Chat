@@ -1,18 +1,18 @@
-import React, {useState} from "react";
-import {createMuiTheme} from "@material-ui/core/styles";
-import {ThemeProvider} from "@material-ui/core";
-import Container from "@material-ui/core/Container";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Avatar from "@material-ui/core/Avatar";
-import VideoCallOutlinedIcon from "@material-ui/icons/VideoCallOutlined";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import React, {useState} from "react"
+import {createMuiTheme} from "@material-ui/core/styles"
+import {ThemeProvider} from "@material-ui/core"
+import Container from "@material-ui/core/Container"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import Avatar from "@material-ui/core/Avatar"
+import VideoCallOutlinedIcon from "@material-ui/icons/VideoCallOutlined"
+import Typography from "@material-ui/core/Typography"
+import TextField from "@material-ui/core/TextField"
+import Button from "@material-ui/core/Button"
 // eslint-disable-next-line
-import {ClassNameMap} from '@material-ui/core/styles/withStyles';
+import {ClassNameMap} from '@material-ui/core/styles/withStyles'
 // eslint-disable-next-line
-import {Theme} from '@material-ui/core/styles/createMuiTheme';
-import {dark, light, useStyles} from "./Styles";
+import {Theme} from '@material-ui/core/styles/createMuiTheme'
+import {dark, light, useStyles} from "./Styles"
 
 /** @type {string} */
 let yourUsername = ''
@@ -75,7 +75,7 @@ const validateUserToCall = (showMistakes = false) => {
  */
 function UserToCallPage({username, setUserToCall, onStartCallClicked, isDarkThemeState, switchTheme}) {
     /** @type {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call" | "avatar_mute_remote">} */
-    const classes = useStyles();
+    const classes = useStyles()
     /** @type {[boolean, Dispatch<SetStateAction<boolean>>]} */
     const [isDarkTheme, setTheme] = useState(isDarkThemeState)
     /** @type {Theme} */
@@ -142,7 +142,7 @@ function UserToCallPage({username, setUserToCall, onStartCallClicked, isDarkThem
                 </div>
             </Container>
         </ThemeProvider>
-    );
+    )
 }
 
 export default UserToCallPage

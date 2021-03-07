@@ -1,11 +1,11 @@
-import React from "react";
+import React from "react"
 // eslint-disable-next-line
-import {ClassNameMap} from '@material-ui/core/styles/withStyles';
-import Avatar from "@material-ui/core/Avatar";
-import CallEndOutlinedIcon from '@material-ui/icons/CallEndOutlined';
-import VolumeUpOutlinedIcon from '@material-ui/icons/VolumeUpOutlined';
-import VolumeOffOutlinedIcon from '@material-ui/icons/VolumeOffOutlined';
-import {useStyles} from "./Styles";
+import {ClassNameMap} from '@material-ui/core/styles/withStyles'
+import Avatar from "@material-ui/core/Avatar"
+import CallEndOutlinedIcon from '@material-ui/icons/CallEndOutlined'
+import VolumeUpOutlinedIcon from '@material-ui/icons/VolumeUpOutlined'
+import VolumeOffOutlinedIcon from '@material-ui/icons/VolumeOffOutlined'
+import {useStyles} from "./Styles"
 
 /** @type {boolean} */
 let isRemoteMuted = false
@@ -45,7 +45,7 @@ const muteRemote = () => {
  */
 function CallPage({isLoggedIn, username, setLocalVideoRef, connectedUser, setRemoteVideoRef, onEndCallClicked}) {
     /** @type {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call" | "avatar_mute_remote">} */
-    const classes = useStyles();
+    const classes = useStyles()
     /** @type {string} */
     let yourUsernameLabel = connectedUser ? 'You' : username
 

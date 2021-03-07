@@ -10,4 +10,4 @@ const config = {
     measurementId: ''
 }
 
-export default config;
+export default config

@@ -2,9 +2,9 @@ import React from 'react'
 import '../App.css'
 import 'firebase/database'
 import {endCall} from "../modules/WebRTCModule"
-import UserLoginPage from "../pages/UserLoginPage";
-import UserToCallPage from "../pages/UserToCallPage";
-import CallPage from "../pages/CallPage";
+import UserLoginPage from "../pages/UserLoginPage"
+import UserToCallPage from "../pages/UserToCallPage"
+import CallPage from "../pages/CallPage"
 
 class VideoChat extends React.Component {
     constructor(props) {

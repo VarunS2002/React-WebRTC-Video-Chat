@@ -12,8 +12,8 @@ import {
     initiateLocalStream,
     listenToConnectionEvents,
     sendAnswer, startCall, endCall
-} from "../modules/WebRTCModule";
-import {doAnswer, doCandidate, doLogin, doOffer} from "../modules/FirebaseModule";
+} from "../modules/WebRTCModule"
+import {doAnswer, doCandidate, doLogin, doOffer} from "../modules/FirebaseModule"
 
 class VideoChatContainer extends React.Component {
     constructor(props) {
@@ -156,7 +156,7 @@ class VideoChatContainer extends React.Component {
     hasRemoteDisconnected() {
         return (this.state.localConnection.iceConnectionState === "failed" ||
             this.state.localConnection.iceConnectionState === "disconnected" ||
-            this.state.localConnection.iceConnectionState === "closed") && !this.state.youDisconnected;
+            this.state.localConnection.iceConnectionState === "closed") && !this.state.youDisconnected
 
     }
 
@@ -189,7 +189,7 @@ class VideoChatContainer extends React.Component {
                 // Send an answer
                 // noinspection JSIgnoredPromiseFromCall
                 sendAnswer(localConnection, localStream, remoteUserDetails, doAnswer, database, username)
-                break;
+                break
             // Situation where you make a call
             case 'answer':
                 this.setState({
@@ -204,13 +204,13 @@ class VideoChatContainer extends React.Component {
                         endCall(this.state.connectedUser)
                     }
                 }
-                break;
+                break
             // Add the candidate to the connection
             case 'candidate':
                 addCandidate(localConnection, remoteUserDetails)
-                break;
+                break
             default:
-                break;
+                break
         }
     }
 
@@ -232,4 +232,4 @@ class VideoChatContainer extends React.Component {
     }
 }
 
-export default VideoChatContainer;
+export default VideoChatContainer
