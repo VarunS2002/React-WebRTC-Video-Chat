@@ -3,7 +3,27 @@ import React from "react";
 import {ClassNameMap} from '@material-ui/core/styles/withStyles';
 import Avatar from "@material-ui/core/Avatar";
 import CallEndOutlinedIcon from '@material-ui/icons/CallEndOutlined';
+import VolumeUpOutlinedIcon from '@material-ui/icons/VolumeUpOutlined';
+import VolumeOffOutlinedIcon from '@material-ui/icons/VolumeOffOutlined';
 import {useStyles} from "./Styles";
+
+/** @type {boolean} */
+let isRemoteMuted = false
+
+/**
+ * Toggles audio of the remote user.
+ *
+ * @return {void}
+ */
+const muteRemote = () => {
+    if (document.getElementById('remote-video').muted) {
+        document.getElementById('remote-video').muted = false
+        isRemoteMuted = false
+    } else {
+        document.getElementById('remote-video').muted = true
+        isRemoteMuted = true
+    }
+}
 
 /**
  * Call Page functional component.
@@ -24,11 +44,11 @@ import {useStyles} from "./Styles";
  * @constructor
  */
 function CallPage({isLoggedIn, username, setLocalVideoRef, connectedUser, setRemoteVideoRef, onEndCallClicked}) {
-    /** @type {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call">} */
+    /** @type {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call" | "avatar_mute_remote">} */
     const classes = useStyles();
 
     return (
-        <div>
+        <div className="call-page">
             {/*Hide the video tag until user has logged in*/}
             <div className={isLoggedIn ? 'videos active' : 'videos'}>
                 {/*Displays your video stream*/}
@@ -39,7 +59,7 @@ function CallPage({isLoggedIn, username, setLocalVideoRef, connectedUser, setRem
                 {/*Displays the other person's video stream*/}
                 <div>
                     <label>{connectedUser}</label>
-                    <video ref={setRemoteVideoRef} autoPlay playsInline/>
+                    <video ref={setRemoteVideoRef} autoPlay playsInline id="remote-video"/>
                 </div>
             </div>
             {/*Creates the Option buttons if a call is active*/}
@@ -52,6 +72,13 @@ function CallPage({isLoggedIn, username, setLocalVideoRef, connectedUser, setRem
                     <CallEndOutlinedIcon>
                         End Call
                     </CallEndOutlinedIcon>
+                </Avatar>
+                <Avatar
+                    className={isRemoteMuted ? classes.avatar_end_call : classes.avatar_mute_remote}
+                    onClick={muteRemote}
+                >
+                    {/*TODO: Fix icon not changing*/}
+                    {isRemoteMuted ? <VolumeOffOutlinedIcon/> : <VolumeUpOutlinedIcon/>}
                 </Avatar>
             </div>}
         </div>

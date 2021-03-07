@@ -50,7 +50,7 @@ const validateUserToCall = (userToCall) => {
  * @constructor
  */
 function UserToCallPage({setUserToCall, onStartCallClicked}) {
-    /** @type {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call">} */
+    /** @type {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call" | "avatar_mute_remote">} */
     const classes = useStyles();
     /** @type {[boolean, Dispatch<SetStateAction<boolean>>]} */
     const [isDarkTheme, setTheme] = useState(true)

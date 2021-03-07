@@ -41,7 +41,17 @@ const useStyles = makeStyles((theme) => ({
         margin: "auto",
         backgroundColor: '#e52f2f',
         color: "white",
-        cursor: "pointer"
+        cursor: "pointer",
+        padding: "25px",
+        marginRight: "5px"
+    },
+    avatar_mute_remote: {
+        margin: "auto",
+        backgroundColor: 'grey',
+        color: "white",
+        cursor: "pointer",
+        padding: "25px",
+        marginLeft: "5px"
     },
 }));
 

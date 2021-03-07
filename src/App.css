@@ -22,6 +22,10 @@ video {
     margin-top: 0;
 }
 
+.call-page {
+    text-align: center;
+}
+
 .videos {
     display: none;
     justify-content: space-between;
@@ -42,4 +46,7 @@ video {
 
 .options {
     text-align: center;
+    flex-direction: row;
+    display: inline-flex;
+    margin: auto;
 }
