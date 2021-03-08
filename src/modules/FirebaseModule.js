@@ -29,6 +29,23 @@ const doLogin = async (username, database, handleUpdate) => {
 }
 
 /**
+ * Clears firebase entries of both users effectively logging them out.
+ * Called when a call ends.
+ *
+ * @param {string} username
+ * @param {string} remoteUsername
+ * @param {firebase.database.Database} database
+ *
+ * @return {Promise<void>}
+ */
+const doLogout = async (username, remoteUsername, database) => {
+    // Clears the entries of the current user logging you out
+    await database.ref('/users/' + username).remove()
+    // Clears the entries of the remote user logging that user out
+    await database.ref('/users/' + remoteUsername).remove()
+}
+
+/**
  * Sends an offer object for the user to call by updating the database field of the remote user.
  *
  * @param {string} to

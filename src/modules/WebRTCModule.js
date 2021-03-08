@@ -1,3 +1,5 @@
+import {doLogout} from "./FirebaseModule"
+
 /**
  * It first adds localStream to the localConnection. It then creates and sets the offer.
  * Finally, it calls doOffer to send the created offer.
@@ -138,11 +140,11 @@ const startCall = (yourConnection, remoteUserDetails) => {
 
 /**
  * Called when a call disconnects or you end the call.
+ * Logs out both the users by calling doLogout.
  * If the call gets disconnected by the other user or by any issue then the name of the other user is passed.
  * An alert is displayed with the remote user's name.
  * It then reloads the page back to the login page.
  * If you end the call it directly reloads the page back to the login page.
- * Logs out both the users.
  *
  * @param {boolean} hasRemoteDisconnected
  * @param {string} remoteUsername
@@ -152,13 +154,11 @@ const startCall = (yourConnection, remoteUserDetails) => {
  * @return {Promise<void>}
  */
 const endCall = async (hasRemoteDisconnected, remoteUsername, username, database) => {
-    // Clears the entries of the current user logging you out
-    await database.ref('/users/' + username).remove()
-    // Clears the entries of the remote user logging that user out
-    await database.ref('/users/' + remoteUsername).remove()
+    // Log out both the users
+    await doLogout(username, remoteUsername, database)
     // Display alert if you have not ended the call
     if (hasRemoteDisconnected) {
-        alert(`Connection lost.\n${remoteUsername} has disconnected.`)
+        alert(`Connection lost.\n${remoteUsername} has disconnected.\nReturning to login screen.`)
     }
     // Reload the page back to the login page
     window.location.reload()
