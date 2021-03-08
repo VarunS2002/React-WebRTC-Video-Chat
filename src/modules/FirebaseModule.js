@@ -101,6 +101,7 @@ const doCandidate = async (to, candidate, database, username) => {
 
 export {
     doLogin,
+    doLogout,
     doOffer,
     doAnswer,
     doCandidate
