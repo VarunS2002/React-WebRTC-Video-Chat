@@ -18,7 +18,7 @@ const dark = {palette: {type: 'dark'}}
  *
  * @param {Theme} theme
  *
- * @return {ClassNameMap<"button" | "paper" | "form" | "avatar">}
+ * @return {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call" | "avatar_mute_remote">}
  */
 const useStyles = makeStyles((theme) => ({
     paper: {
