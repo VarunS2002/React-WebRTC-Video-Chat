@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     font-family: 'Cabin', sans-serif;
-    padding-top: 200px;
+    padding-top: 150px;
 }
 
 .div-video-frames {
@@ -14,6 +14,7 @@
 .logged-in-local-video {
     width: 55%;
     height: 100%;
+    margin-left: 5px;
     border-top-left-radius: 0.8ch;
     border-top-right-radius: 0.8ch;
 }
@@ -85,6 +86,7 @@
 
 .not-connected-labels {
     width: 55%;
+    margin-left: 5px;
 }
 
 .connected-labels {
