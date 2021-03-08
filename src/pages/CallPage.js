@@ -37,7 +37,7 @@ const muteRemote = () => {
  * @param {function(React.RefObject<HTMLVideoElement>): void} setLocalVideoRef
  * @param {string} connectedUser
  * @param {function(React.RefObject<HTMLVideoElement>): void} setRemoteVideoRef
- * @param {function(): void} onEndCallClicked
+ * @param {function(): Promise<void>} onEndCallClicked
  *
  * @return {JSX.Element}
  *

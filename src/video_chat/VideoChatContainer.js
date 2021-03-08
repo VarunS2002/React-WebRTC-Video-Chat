@@ -181,7 +181,8 @@ class VideoChatContainer extends React.Component {
                 // eslint-disable-next-line react/no-direct-mutation-state
                 this.state.localConnection.oniceconnectionstatechange = () => {
                     if (this.hasRemoteDisconnected()) {
-                        endCall(this.state.connectedUser)
+                        // noinspection JSIgnoredPromiseFromCall
+                        endCall(true, this.state.connectedUser, username, this.state.database)
                     }
                 }
                 // Listen to the connection events
@@ -201,7 +202,8 @@ class VideoChatContainer extends React.Component {
                 // eslint-disable-next-line react/no-direct-mutation-state
                 this.state.localConnection.oniceconnectionstatechange = () => {
                     if (this.hasRemoteDisconnected()) {
-                        endCall(this.state.connectedUser)
+                        // noinspection JSIgnoredPromiseFromCall
+                        endCall(true, this.state.connectedUser, username, this.state.database)
                     }
                 }
                 break
@@ -227,6 +229,7 @@ class VideoChatContainer extends React.Component {
                 setLocalVideoRef={this.setLocalVideoRef}
                 setRemoteVideoRef={this.setRemoteVideoRef}
                 connectedUser={this.state.connectedUser}
+                database={this.state.database}
             />
         </div>
     }

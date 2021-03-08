@@ -132,8 +132,8 @@ const sendAnswer = async (localConnection, localStream, remoteUserDetails, doAns
  */
 const startCall = (yourConnection, remoteUserDetails) => {
     yourConnection.setRemoteDescription(JSON.parse(remoteUserDetails.answer)).catch((exception) => {
-            console.log(exception + " (startCall)")
-        })
+        console.log(exception + " (startCall)")
+    })
 }
 
 /**
@@ -142,15 +142,23 @@ const startCall = (yourConnection, remoteUserDetails) => {
  * An alert is displayed with the remote user's name.
  * It then reloads the page back to the login page.
  * If you end the call it directly reloads the page back to the login page.
+ * Logs out both the users.
  *
- * @param {string} remoteDisconnectedUserName
+ * @param {boolean} hasRemoteDisconnected
+ * @param {string} remoteUsername
+ * @param {string} username
+ * @param database {firebase.database.Database}
  *
- * @return {void}
+ * @return {Promise<void>}
  */
-const endCall = (remoteDisconnectedUserName = '') => {
+const endCall = async (hasRemoteDisconnected, remoteUsername, username, database) => {
+    // Clears the entries of the current user logging you out
+    await database.ref('/users/' + username).remove()
+    // Clears the entries of the remote user logging that user out
+    await database.ref('/users/' + remoteUsername).remove()
     // Display alert if you have not ended the call
-    if (remoteDisconnectedUserName !== '') {
-        alert(`Connection lost.\n${remoteDisconnectedUserName} has disconnected.`)
+    if (hasRemoteDisconnected) {
+        alert(`Connection lost.\n${remoteUsername} has disconnected.`)
     }
     // Reload the page back to the login page
     window.location.reload()

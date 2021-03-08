@@ -59,13 +59,13 @@ class VideoChat extends React.Component {
      * It calls the endCall function.
      * It is called when the End Call button is clicked.
      *
-     * @return {void}
+     * @return {Promise<void>}
      */
-    onEndCallClicked = () => {
+    onEndCallClicked = async () => {
         this.setState({
             youDisconnected: true
         })
-        endCall()
+        await endCall(false, this.props.connectedUser, this.state.username, this.props.database)
     }
 
     /**
