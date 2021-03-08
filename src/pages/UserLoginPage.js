@@ -72,6 +72,24 @@ function UserLoginPage({setUsername, onLoginClicked, isDarkThemeState, switchThe
         palette: {primary: {main: '#1A73E8'}}
     })
 
+    /**
+     * Logs in by calling onLoginClicked if the key pressed is Enter and User ID is valid.
+     * If invalid it shows the mistake by calling validateUsername with showMistakes as true.
+     *
+     * @param {React.KeyboardEvent<HTMLDivElement>} event
+     *
+     * @return {Promise<void>}
+     */
+    const bindEnterKey =  async (event) => {
+        if (event.key === "Enter" && document.activeElement.id === "login-input") {
+            if (isUsernameValid) {
+                await onLoginClicked()
+            } else {
+                validateUsername(true)
+            }
+        }
+    }
+
     return (
         <ThemeProvider theme={appliedTheme}>
             <Container component="main" maxWidth="xs">
@@ -98,6 +116,8 @@ function UserLoginPage({setUsername, onLoginClicked, isDarkThemeState, switchThe
                                 // Sets value of username in state
                                 setUsername(event.target.value)
                             }}
+                            // Sets event listener for every keypress to login if Enter key is clicked
+                            onKeyPress={event => bindEnterKey(event)}
                             label="User ID"
                             autoFocus
                         />

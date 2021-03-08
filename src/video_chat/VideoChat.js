@@ -84,21 +84,6 @@ class VideoChat extends React.Component {
     }
 
     /**
-     * Binds Enter key to click Login or click Call on their respective pages.
-     *
-     * @param {KeyboardEvent} event
-     *
-     * @return {void}
-     */
-    bindEnterKey = async (event) => {
-        if (event.key === "Enter" && document.activeElement.id === "login-input") {
-            await this.onLoginClicked()
-        } else if (event.key === "Enter" && document.activeElement.id === "contact-input") {
-            await this.onStartCallClicked()
-        }
-    }
-
-    /**
      * Sets the value of username in the state.
      *
      * @param {string} username
@@ -127,9 +112,6 @@ class VideoChat extends React.Component {
      * @return {JSX.Element}
      */
     renderForms() {
-        // Sets event listener for every keypress to check if Enter key is clicked by calling bindEnterKey
-        window.addEventListener('keypress', this.bindEnterKey)
-
         // Renders the form
         return !this.state.isLoggedIn ?
             // Rendered if user has not logged in

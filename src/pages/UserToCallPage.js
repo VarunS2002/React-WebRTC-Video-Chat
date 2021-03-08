@@ -84,6 +84,24 @@ function UserToCallPage({username, setUserToCall, onStartCallClicked, isDarkThem
     })
     yourUsername = username
 
+    /**
+     * Starts call by calling onStartCallClicked if the key pressed is Enter and Contact ID is valid.
+     * If invalid it shows the mistake by calling validateUserToCall with showMistakes as true.
+     *
+     * @param {React.KeyboardEvent<HTMLDivElement>} event
+     *
+     * @return {Promise<void>}
+     */
+    const bindEnterKey =  async (event) => {
+        if (event.key === "Enter" && document.activeElement.id === "contact-input") {
+            if (isUserToCallValid) {
+                await onStartCallClicked()
+            } else {
+                validateUserToCall(true)
+            }
+        }
+    }
+
     return (
         <ThemeProvider theme={appliedTheme}>
             <Container component="main" maxWidth="xs">
@@ -110,6 +128,8 @@ function UserToCallPage({username, setUserToCall, onStartCallClicked, isDarkThem
                                 // Sets value of userToCall in state
                                 setUserToCall(event.target.value)
                             }}
+                            // Sets event listener for every keypress to start call if Enter key is clicked
+                            onKeyPress={event => bindEnterKey(event)}
                             label="Contact ID"
                             autoFocus
                         />
