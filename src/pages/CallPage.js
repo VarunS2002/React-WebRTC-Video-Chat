@@ -44,7 +44,7 @@ const muteRemote = () => {
  * @constructor
  */
 function CallPage({isLoggedIn, username, setLocalVideoRef, connectedUser, setRemoteVideoRef, onEndCallClicked}) {
-    /** @type {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call" | "avatar_mute_remote">} */
+    /** @type {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call" | "avatar_muted_remote" | "avatar_unmuted_remote">} */
     const classes = useStyles()
     /** @type {[JSX.Element, Dispatch<SetStateAction<JSX.Element>>]} */
     const [speakerIcon, setSpeakerIcon] = useState(<VolumeUpOutlinedIcon/>)
@@ -80,7 +80,7 @@ function CallPage({isLoggedIn, username, setLocalVideoRef, connectedUser, setRem
                     <CallEndOutlinedIcon/>
                 </Avatar>
                 <Avatar
-                    className={classes.avatar_mute_remote}
+                    className={isRemoteMuted ? classes.avatar_muted_remote : classes.avatar_unmuted_remote}
                     onClick={() => {
                         muteRemote()
                         if (isRemoteMuted) {

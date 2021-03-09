@@ -18,7 +18,7 @@ const dark = {palette: {type: 'dark'}}
  *
  * @param {Theme} theme
  *
- * @return {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call" | "avatar_mute_remote">}
+ * @return {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call" | "avatar_muted_remote" | "avatar_unmuted_remote">}
  */
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -39,19 +39,36 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar_end_call: {
         margin: "auto",
-        backgroundColor: '#e52f2f',
-        color: "white",
+        backgroundColor: "transparent",
+        color: "#e52f2f",
         cursor: "pointer",
         padding: "25px",
-        marginRight: "5px"
+        marginRight: "5px",
+        borderColor: theme.color,
+        borderStyle: "solid",
+        borderWidth: 2.5
     },
-    avatar_mute_remote: {
+    avatar_muted_remote: {
         margin: "auto",
-        backgroundColor: 'grey',
+        backgroundColor: "#e52f2f",
         color: "white",
         cursor: "pointer",
         padding: "25px",
-        marginLeft: "5px"
+        marginLeft: "5px",
+        borderColor: "#e52f2f",
+        borderStyle: "solid",
+        borderWidth: 2.5
+    },
+    avatar_unmuted_remote: {
+        margin: "auto",
+        backgroundColor: 'transparent',
+        color: "grey",
+        cursor: "pointer",
+        padding: "25px",
+        marginLeft: "5px",
+        borderColor: theme.color,
+        borderStyle: "solid",
+        borderWidth: 2.5
     },
 }))
 
