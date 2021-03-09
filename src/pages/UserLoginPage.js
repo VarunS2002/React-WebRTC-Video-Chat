@@ -29,6 +29,13 @@ let isUsernameValid = false
  * @return {boolean}
  */
 const validateUsername = (showMistakes = false) => {
+    // Validates whether username is empty
+    /** @type {boolean} */
+    const isNotEmpty = yourUsername.length !== 0
+    if (showMistakes && !isNotEmpty) {
+        alert("User ID cannot be empty")
+        return false
+    }
     // Regex Expression to match only letters and numbers
     /** @type RegExp */
     const regexAlphaNumeric = /^[0-9a-zA-Z]+$/
