@@ -70,7 +70,7 @@ const validateUsername = (showMistakes = false) => {
  * @constructor
  */
 function UserLoginPage({setUsername, onLoginClicked, isDarkThemeState, switchTheme}) {
-    /** @type {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call" | "avatar_muted_remote" | "avatar_unmuted_remote">} */
+    /** @type {ClassNameMap<"button" | "avatar_enabled" | "paper" | "form" | "avatar_disabled" | "avatar" | "avatar_end_call">} */
     const classes = useStyles()
     /** @type {[boolean, Dispatch<SetStateAction<boolean>>]} */
     const [isDarkTheme, setTheme] = useState(isDarkThemeState)

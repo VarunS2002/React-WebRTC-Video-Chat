@@ -230,6 +230,7 @@ class VideoChatContainer extends React.Component {
                 setRemoteVideoRef={this.setRemoteVideoRef}
                 connectedUser={this.state.connectedUser}
                 database={this.state.database}
+                localStream={this.state.localStream}
             />
         </div>
     }

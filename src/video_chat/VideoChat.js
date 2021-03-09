@@ -80,6 +80,7 @@ class VideoChat extends React.Component {
                          connectedUser={this.props.connectedUser}
                          setRemoteVideoRef={this.props.setRemoteVideoRef}
                          onEndCallClicked={this.onEndCallClicked}
+                         localStream={this.props.localStream}
         />
     }
 
