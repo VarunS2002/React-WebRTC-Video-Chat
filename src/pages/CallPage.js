@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 // eslint-disable-next-line
 import {ClassNameMap} from '@material-ui/core/styles/withStyles'
 import Avatar from "@material-ui/core/Avatar"
@@ -46,6 +46,8 @@ const muteRemote = () => {
 function CallPage({isLoggedIn, username, setLocalVideoRef, connectedUser, setRemoteVideoRef, onEndCallClicked}) {
     /** @type {ClassNameMap<"button" | "paper" | "form" | "avatar" | "avatar_end_call" | "avatar_mute_remote">} */
     const classes = useStyles()
+    /** @type {[JSX.Element, Dispatch<SetStateAction<JSX.Element>>]} */
+    const [speakerIcon, setSpeakerIcon] = useState(<VolumeUpOutlinedIcon/>)
     /** @type {string} */
     let yourUsernameLabel = connectedUser ? 'You' : username
 
@@ -78,11 +80,18 @@ function CallPage({isLoggedIn, username, setLocalVideoRef, connectedUser, setRem
                     <CallEndOutlinedIcon/>
                 </Avatar>
                 <Avatar
-                    className={isRemoteMuted ? classes.avatar_end_call : classes.avatar_mute_remote}
-                    onClick={muteRemote}
+                    className={classes.avatar_mute_remote}
+                    onClick={() => {
+                        muteRemote()
+                        if (isRemoteMuted) {
+                            setSpeakerIcon(<VolumeOffOutlinedIcon/>)
+                        } else {
+                            setSpeakerIcon(<VolumeUpOutlinedIcon/>)
+                        }
+                    }
+                    }
                 >
-                    {/*TODO: Fix icon not changing*/}
-                    {isRemoteMuted ? <VolumeOffOutlinedIcon/> : <VolumeUpOutlinedIcon/>}
+                    {speakerIcon}
                 </Avatar>
             </div>}
         </div>
