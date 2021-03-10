@@ -107,8 +107,6 @@ function CallPage({
     const [micIcon, setMicIcon] = useState(<MicNoneOutlinedIcon/>)
     /** @type {[JSX.Element, Dispatch<SetStateAction<JSX.Element>>]} */
     const [cameraIcon, setCameraIcon] = useState(<VideocamOutlinedIcon/>)
-    /** @type {string} */
-    let yourUsernameLabel = connectedUser ? 'You' : username
 
     return (
         <div className="call-page">
@@ -120,7 +118,7 @@ function CallPage({
                            className={isLoggedIn ? (connectedUser ? 'connected-video' : 'logged-in-local-video') : null}/>
                     <label
                         className={connectedUser ? "name-labels connected-labels" : "name-labels not-connected-labels"}
-                        id="your-username-label">{yourUsernameLabel}</label>
+                        id="your-username-label">{connectedUser ? username + ' (You)' : username}</label>
                 </div>
                 {/*Displays the other person's video stream*/}
                 <div id="remote-video-frame" className="div-video-frames">
