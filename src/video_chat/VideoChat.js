@@ -119,7 +119,6 @@ class VideoChat extends React.Component {
             <UserLoginPage
                 setUsername={this.setUsername}
                 onLoginClicked={this.onLoginClicked}
-                isDarkThemeState={this.state.isDarkTheme}
                 switchTheme={this.switchTheme}
             />
             :
