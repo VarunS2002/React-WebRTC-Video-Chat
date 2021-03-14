@@ -114,6 +114,7 @@ class VideoChat extends React.Component {
      */
     renderForms() {
         // Renders the form
+        // noinspection NegatedConditionalExpressionJS
         return !this.state.isLoggedIn ?
             // Rendered if user has not logged in
             <UserLoginPage

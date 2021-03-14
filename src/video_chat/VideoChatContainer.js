@@ -154,9 +154,12 @@ class VideoChatContainer extends React.Component {
      * @return {boolean}
      */
     hasRemoteDisconnected() {
-        return (this.state.localConnection.iceConnectionState === "failed" ||
+        /** @type {boolean}*/
+        const connectionLost = this.state.localConnection.iceConnectionState === "failed" ||
             this.state.localConnection.iceConnectionState === "disconnected" ||
-            this.state.localConnection.iceConnectionState === "closed") && !this.state.youDisconnected
+            this.state.localConnection.iceConnectionState === "closed"
+
+        return connectionLost && !this.state.youDisconnected
 
     }
 
