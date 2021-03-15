@@ -109,8 +109,16 @@ class VideoChatContainer extends React.Component {
         const audioLocalStream = localStream.getTracks()[0]
         /** @type {MediaStreamTrack | undefined} */
         const videoLocalStream = localStream.getTracks()[1]
-        await audioLocalStream.applyConstraints({echoCancellation: true, noiseSuppression: true})
-        await videoLocalStream.applyConstraints({frameRate: 60})
+        await audioLocalStream.applyConstraints({
+            echoCancellation: true,
+            noiseSuppression: true
+        })
+        await videoLocalStream.applyConstraints({
+            frameRate: 30,
+            facingMode: {ideal: "user"},
+            width: {exact: 640},
+            height: {exact: 480}
+        })
         // Setting the Reference
         this.localVideoRef.srcObject = localStream
         // Create the local connection
