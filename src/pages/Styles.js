@@ -2,7 +2,7 @@ import {makeStyles} from "@material-ui/core/styles"
 // eslint-disable-next-line
 import {ClassNameMap} from '@material-ui/core/styles/withStyles'
 // eslint-disable-next-line
-import {Theme} from '@material-ui/core/styles/createMuiTheme'
+import {Theme} from '@material-ui/core/styles/createTheme'
 
 
 // Property for light theme

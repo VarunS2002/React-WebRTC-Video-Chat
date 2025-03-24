@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import {createMuiTheme} from "@material-ui/core/styles"
+import {createTheme} from "@material-ui/core/styles"
 import {ThemeProvider} from "@material-ui/core"
 import Container from "@material-ui/core/Container"
 import CssBaseline from "@material-ui/core/CssBaseline"
@@ -11,7 +11,7 @@ import Button from "@material-ui/core/Button"
 // eslint-disable-next-line
 import {ClassNameMap} from '@material-ui/core/styles/withStyles'
 // eslint-disable-next-line
-import {Theme} from '@material-ui/core/styles/createMuiTheme'
+import {Theme} from '@material-ui/core/styles/createTheme'
 import {dark, light, useStyles} from "./Styles"
 
 /** @type {string} */
@@ -86,7 +86,7 @@ function UserToCallPage({username, setUserToCall, onStartCallClicked, isDarkThem
     /** @type {[boolean, Dispatch<SetStateAction<boolean>>]} */
     const [isDarkTheme, setTheme] = useState(isDarkThemeState)
     /** @type {Theme} */
-    const appliedTheme = createMuiTheme(isDarkTheme ? dark : light, {
+    const appliedTheme = createTheme(isDarkTheme ? dark : light, {
         palette: {primary: {main: '#1A73E8'}}
     })
     yourUsername = username
