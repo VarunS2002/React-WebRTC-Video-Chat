@@ -123,7 +123,7 @@ function UserLoginPage({setUsername, onLoginClicked, switchTheme}) {
                                 setUsername(event.target.value)
                             }}
                             // Sets event listener for every keypress to login if Enter key is clicked
-                            onKeyPress={event => bindEnterKey(event)}
+                            onKeyUp={event => bindEnterKey(event)}
                             label="User ID"
                             autoFocus
                         />

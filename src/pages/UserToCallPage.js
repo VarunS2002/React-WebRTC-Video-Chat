@@ -136,7 +136,7 @@ function UserToCallPage({username, setUserToCall, onStartCallClicked, isDarkThem
                                 setUserToCall(event.target.value)
                             }}
                             // Sets event listener for every keypress to start call if Enter key is clicked
-                            onKeyPress={event => bindEnterKey(event)}
+                            onKeyUp={event => bindEnterKey(event)}
                             label="Contact ID"
                             autoFocus
                         />
