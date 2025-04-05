@@ -16,9 +16,9 @@ import {doLogout} from "./FirebaseModule"
 const createOffer = async (connection, localStream, userToCall, doOffer, database, username) => {
     try {
         // Add local audio/video stream to the localConnection
-        // TODO: Update deprecated addStream to addTrack
-        // noinspection JSUnresolvedFunction
-        connection.addStream(localStream)
+        localStream.getTracks().forEach((track) => {
+            connection.addTrack(track, localStream);
+        });
         // Create offer and set it
         /** @type {RTCSessionDescriptionInit} */
         const offer = await connection.createOffer()
@@ -106,9 +106,9 @@ const listenToConnectionEvents = (localConnection, username, remoteUsername, dat
 const sendAnswer = async (localConnection, localStream, remoteUserDetails, doAnswer, database, username) => {
     try {
         // Add the local audio/video stream to the connection
-        // TODO: Update deprecated addStream to addTrack
-        // noinspection JSUnresolvedFunction
-        localConnection.addStream(localStream)
+        localStream.getTracks().forEach((track) => {
+            localConnection.addTrack(track, localStream);
+        });
         // Set the remote description
         await localConnection.setRemoteDescription(JSON.parse(remoteUserDetails.offer))
         // Create an answer to an offer
