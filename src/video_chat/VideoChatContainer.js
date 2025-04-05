@@ -52,8 +52,9 @@ class VideoChatContainer extends React.Component {
     /**
      * Prevent re-render if not necessary.
      *
-     * @param {Readonly<P>} nextProps
-     * @param {Readonly<S>} nextState
+     * @param {Readonly<T>} nextProps
+     * @param {Readonly<T>} nextState
+     * @template T
      * @param {any} nextContext
      *
      * @return {boolean}

@@ -108,6 +108,7 @@ function CallPage({
     /** @type {[JSX.Element, Dispatch<SetStateAction<JSX.Element>>]} */
     const [cameraIcon, setCameraIcon] = useState(<VideocamOutlinedIcon/>)
 
+    // noinspection JSValidateTypes
     return (
         <div className="call-page">
             {/*Hide the video tag until user has logged in*/}
