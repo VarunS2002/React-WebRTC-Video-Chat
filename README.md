@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# React-WebRTC-Video-Chat
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-## Available Scripts
+A basic one-on-one video chat app built with React, WebRTC and Firebase,
+enabling real-time, peer-to-peer and serverless video communication directly in the browser.
 
-In the project directory, you can run:
+#### This project is heavily based on the video guide made by [Masoud](https://www.youtube.com/@ReactWithMasoud) which was posted [here](https://www.youtube.com/watch?v=-d45WHNU9J4&t=3153s&ab_channel=ReactwithMasoud).
 
-### `npm start`
+## Requirements:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [Node.js with npm](https://nodejs.org/en/download/)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Google account with Firebase access
 
-### `npm test`
+## Setup:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Run `npm install`
 
-### `npm run build`
+2. Setup a Firebase project with Realtime Database.
+   Sample guide [here](https://grotoned.medium.com/tutorial-using-firebase-as-a-realtime-database-with-react-2a3a24c1df91)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Update `config.js` with your Firebase project config and a public STUN server
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Usage:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Run `npm start`
 
-### `npm run eject`
+2. Open [http://localhost:3000](http://localhost:3000) to view it in your browser
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. Open the link in an incognito window/different browser/different machine on the same network
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. Login with a unique name in each window and allow camera and microphone permissions
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+5. Call the other name in one of the two windows
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Features:
 
-## Learn More
+- Start/End Call
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Turn-off Microphone
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Turn-off Camera
 
-### Code Splitting
+- Mute the Other Person
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Dark and Light theme
 
-### Analyzing the Bundle Size
+- Material Design
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Note:
 
-### Making a Progressive Web App
+- This project is a proof of concept and does not support many essential usability, privacy and security features, and 
+ therefore, it should never be used in a production environment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Screenshots:
 
-### Advanced Configuration
+- Login Page:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+  <br>![Login_Page](https://i.imgur.com/i7YiGGq.png) <br><br>
 
-### Deployment
+- Call Lobby:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+  <br>![Call_Lobby](https://i.imgur.com/xpmpBis.png) <br><br>
 
-### `npm run build` fails to minify
+- Ongoing Call:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  <br>![Ongoing_Call](https://i.imgur.com/G748P8A.png) <br><br>
