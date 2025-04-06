@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 // eslint-disable-next-line
 import {ClassNameMap} from '@material-ui/core/styles/withStyles'
 import Avatar from "@material-ui/core/Avatar"
@@ -107,6 +107,22 @@ function CallPage({
     const [micIcon, setMicIcon] = useState(<MicNoneOutlinedIcon/>)
     /** @type {[JSX.Element, Dispatch<SetStateAction<JSX.Element>>]} */
     const [cameraIcon, setCameraIcon] = useState(<VideocamOutlinedIcon/>)
+
+
+    /**
+     * Flips video horizontally.
+     * It is called when the component is rendered.
+     *
+     * @return {void}
+     */
+    useEffect(() => {
+        /** @type {HTMLCollectionOf<HTMLVideoElement>} */
+        let videos = document.getElementsByTagName("video");
+        // FLip videos horizontally
+        for (let i = 0; i < videos.length; i++) {
+            videos[i].style.transform = "scaleX(-1)";
+        }
+    }, []);
 
     // noinspection JSValidateTypes
     return (
