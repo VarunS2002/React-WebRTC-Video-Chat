@@ -1,3 +1,4 @@
+import {stunServer} from "../config"
 import {doLogout} from "./FirebaseModule"
 
 /**
@@ -51,7 +52,7 @@ const initiateLocalStream = async () => {
 const initiateConnection = async () => {
     try {
         // Create a connection by using Google public STUN server
-        const configuration = {iceServers: [{urls: 'stun:stun2.1.google.com:19302'}]}
+        const configuration = {iceServers: [{urls: stunServer}]}
         return new RTCPeerConnection(configuration)
     } catch (exception) {
         console.error(exception)

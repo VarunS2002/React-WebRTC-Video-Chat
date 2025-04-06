@@ -8,6 +8,11 @@ const config = {
     messagingSenderId: '',
     appId: '',
     measurementId: ''
-}
+};
 
-export default config
+const stunServer = '';
+
+export {
+    config,
+    stunServer,
+}

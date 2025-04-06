@@ -3,7 +3,7 @@ import firebase from "firebase/app"
 import 'firebase/database'
 import 'webrtc-adapter'
 import '../App.css'
-import config from "../config"
+import {config} from "../config"
 import VideoChat from './VideoChat'
 import {
     addCandidate,
